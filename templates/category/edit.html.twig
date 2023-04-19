@@ -1,0 +1,13 @@
+{% extends 'backAdmin.html.twig' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block body %}
+    <h1>Modifier la categorie</h1>
+
+    {{ include('category/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_category_index') }}">Liste des catégories</a>
+
+    {{ include('category/_delete_form.html.twig') }}
+{% endblock %}
