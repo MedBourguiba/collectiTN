@@ -1,0 +1,104 @@
+{% extends 'frontClient.html.twig' %}
+{% block body %}
+<section class="section bg-gray">
+	<!-- Container Start -->
+	<div class="container">
+		<div class="row">
+			<!-- Left sidebar -->
+			<div class="col-lg-8">
+				<article class="single-post">
+					<h2>{{item.name}}</h2>
+                    {% set img_path = 'uploads/item_images/' ~ item.getimg %}
+					<img src="{{ asset(img_path) }}" alt="piece">
+					<p>{{item.description}}</p>
+				</article>
+			</div>
+			<div class="col-lg-4">
+				<div class="sidebar">
+					<div class="widget price text-center">
+						<h4>Dernier prix</h4>
+						{# <p>{{lastBid.amount}} TND</p> #}
+					</div>
+					<!-- User Profile widget -->
+				  <div class="auction-widget">
+                    <div class="auction-info">
+                       <div class="row">
+                         <div class="col-sm-6">
+                            <div class="auction-time">
+                                <div class="text-uppercase">Starting Time:</div>
+                                   <div>{{ item.getStartTime|date('m/d/Y H:i:s') }}</div>
+                           </div>
+                        </div>
+                        <div class="col-sm-6">
+                               <div class="auction-time">
+                                    <div class="text-uppercase">Ending Time:</div>
+                                    <div>{{ item.getEndTime|date('m/d/Y H:i:s') }}</div>
+                                </div>
+                            </div>
+                       </div>
+                     <hr>
+                        <div class="row">
+                            <div class="col-sm-6">
+                              <div class="auction-price">
+                                  <div class="text-uppercase">Estimated Price:</div>
+                                     <div>{{ item.getEstimatedPrice }}</div>
+                             </div>
+                            </div>
+                           <div class="col-sm-6">
+                                <div class="auction-price">
+                                     <div class="text-uppercase">Starting Price:</div>
+                                        <div>{{ item.getStartingPrice }}</div>
+                               </div>
+                          </div>
+                      </div>
+                    </div>
+                   </div>
+
+					<!-- Map Widget -->
+					<div class="widget map">
+						<div class="map">
+							<div id="map" data-latitude="51.507351" data-longitude="-0.127758"></div>
+						</div>
+					</div>
+					<!-- Rate Widget -->
+					<div class="widget rate">
+						<!-- Heading -->
+						<h5 class="widget-header text-center">What would you rate
+							<br>
+							this product</h5>
+						<!-- Rate -->
+						<div class="starrr"></div>
+					</div>
+					<!-- Safety tips widget -->
+					<div class="widget disclaimer">
+						<h5 class="widget-header">Safety Tips</h5>
+						<ul>
+							<li>Meet seller at a public place</li>
+							<li>Check the item before you buy</li>
+							<li>Pay only after collecting the item</li>
+							<li>Pay only after collecting the item</li>
+						</ul>
+					</div>
+					<!-- Coupon Widget -->
+					<div class="widget coupon text-center">
+						<!-- Coupon description -->
+						<p>Have a great product to post ? Share it with
+							your fellow users.
+						</p>
+						<!-- Submii button -->
+						<a href="single.html" class="btn btn-transparent-white">Submit Listing</a>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<!-- Container End -->
+</section>
+    <h1>Add Bid</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.amount) }}
+    <button type="submit" class="btn btn-offer d-inline-block btn-primary ml-n1 my-1 px-lg-4 px-md-3">Add Bid</button>
+    {{ form_end(form) }}
+{% endblock %}

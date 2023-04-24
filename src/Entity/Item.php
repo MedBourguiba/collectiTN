@@ -60,6 +60,9 @@ class Item
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $Partner = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Utilisateur $winner = null;
+
     public function __construct()
     {
         $this->bids = new ArrayCollection();
@@ -233,6 +236,18 @@ class Item
     public function setPartner(Utilisateur $Partner): self
     {
         $this->Partner = $Partner;
+
+        return $this;
+    }
+
+    public function getWinner(): ?Utilisateur
+    {
+        return $this->winner;
+    }
+
+    public function setWinner(?Utilisateur $winner): self
+    {
+        $this->winner = $winner;
 
         return $this;
     }
