@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\PdfService;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
 use App\Repository\ReclamationRepository;
@@ -46,6 +47,14 @@ class ReclamationController extends AbstractController
         return $this->render('reclamation/show.html.twig', [
             'reclamation' => $reclamation,
         ]);
+    }
+    #[Route('/pdf/{id}', name: 'app_reclamation.pdf')]
+    public function generatePdfReclamation(Reclamation $reclamation =null ,PdfService $pdf)
+    {
+        $html =$this ->render ('reclamation/show.html.twig', [
+            'reclamation' => $reclamation,
+        ]);
+        $pdf->showPdfFile($html);
     }
 
     #[Route('/{id}/edit', name: 'app_reclamation_edit', methods: ['GET', 'POST'])]

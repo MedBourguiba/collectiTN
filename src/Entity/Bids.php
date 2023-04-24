@@ -14,7 +14,7 @@ class Bids
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?decimal $amount = null;
+    private ?float $amount = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -35,12 +35,12 @@ class Bids
         return $this->id;
     }
 
-    public function getAmount(): ?decimal
+    public function getAmount(): ?float
     {
         return $this->amount;
     }
 
-    public function setAmount(decimal $amount): self
+    public function setAmount(float $amount): self
     {
         $this->amount = $amount;
 
