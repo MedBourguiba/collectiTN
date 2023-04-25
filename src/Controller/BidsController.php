@@ -12,11 +12,16 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\BidsRepository;
 use App\Entity\Bids;
 use Symfony\Component\Security\Core\User\UserInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 
 
 class BidsController extends AbstractController
 {
 
+    public function __construct(FlashyNotifier $flashy)
+{
+    $this->flashy = $flashy;
+}
 
     #[Route('/item/{id}/bid/update', name: 'bid_update')]
 public function update_bid(Request $request, Item $item, BidsRepository $bidRepository, UserInterface $user): Response
@@ -56,7 +61,7 @@ var_dump($lastBid->getAmount());
 }
 
     #[Route('/item/{id}/bid', name: 'bid_on_item')]
-public function new(int $id, Request $request, ItemRepository $itemRepository, BidsRepository $bidRepository, UserInterface $user): Response
+public function new(int $id, Request $request, ItemRepository $itemRepository, BidsRepository $bidRepository, UserInterface $user,FlashyNotifier $flashy): Response
 {
     $item = $itemRepository->find($id);
     if (!$item) {
@@ -86,10 +91,14 @@ public function new(int $id, Request $request, ItemRepository $itemRepository, B
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($currentBid);
             $entityManager->flush();
-            $this->addFlash('success', 'Your bid has been submitted!');
+            $flashy->success('Enchère ajouté avec succès', 'http://your-awesome-link.com');
+            $this->addFlash('success', $flashy->getFlashMessage('success'));
+
+          
             return $this->redirectToRoute('list_client', ['id' => $item->getId()]);
         } else {
-            $this->addFlash('error', 'Your bid is too low!');
+            $flashy->error('Votre Enchère est faible', 'http://your-awesome-link.com');
+            $this->addFlash('error', $flashy->getFlashMessage('error'));
         }
     }
 
@@ -97,7 +106,7 @@ public function new(int $id, Request $request, ItemRepository $itemRepository, B
         'bid' => $currentBid,
         'form' => $form->createView(),
         'last_bid' => $lastBid,
-        'item' => $item,
+        'item' => $item
     ]);
 }
 

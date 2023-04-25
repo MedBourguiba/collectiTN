@@ -3,12 +3,19 @@
 {% block title %}Utilisateur index{% endblock %}
 
 {% block body %}
+  <form class="form-inline my-2 my-lg-0" action="{{ path('app_utilisateur_index') }}" method="GET">
+                               <input class="form-control mr-sm-2" type="text" placeholder="Search" name="Q">
+                               <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+ </form>
     <h1>Utilisateur index</h1>
+
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
+                <th>nom</th>
+                <th>prénom</th>
                 <th>Email</th>
                 <th>Roles</th>
                 <th>Password</th>
@@ -19,6 +26,8 @@
         {% for utilisateur in utilisateurs %}
             <tr>
                 <td>{{ utilisateur.id }}</td>
+                <td>{{ utilisateur.nom }}</td>
+                <td>{{ utilisateur.prenom }}</td>
                 <td>{{ utilisateur.email }}</td>
                 <td>{{ utilisateur.roles|join(', ') }}</td>
                 <td>{{ utilisateur.password }}</td>

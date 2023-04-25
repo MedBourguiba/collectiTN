@@ -25,10 +25,19 @@ class UtilisateurController extends AbstractController
         $this->passwordEncoder = $passwordEncoder;
     }
     #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
-    public function index(UtilisateurRepository $utilisateurRepository): Response
+    public function index(UtilisateurRepository $utilisateurRepository,Request $request): Response
     {
+        $searchTerm = $request->query->get('Q');
+        $utilisateurs = [];
+        if (!empty($searchTerm)) {
+            $utilisateurs = $utilisateurRepository->search($searchTerm);
+        }
+        else{
+            $utilisateurs = $utilisateurRepository->findAll();
+        }
         return $this->render('utilisateur/index.html.twig', [
-            'utilisateurs' => $utilisateurRepository->findAll(),
+            'utilisateurs' => $utilisateurs,
+            'searchTerm' => $searchTerm,
         ]);
     }
 

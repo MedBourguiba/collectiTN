@@ -19,6 +19,9 @@ services:
     App\Controller\SecurityController:
         arguments:
             $session: '@session'
+    App\EventListener\SetWinnerListener:
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate, entity: App/Entity/Item }
     
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

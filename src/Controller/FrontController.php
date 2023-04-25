@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ItemRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CategoryRepository;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 
 #[Route('/client')]
 class FrontController extends AbstractController
@@ -23,7 +24,7 @@ class FrontController extends AbstractController
         $entityManager2 = $doctrine2->getManager();
         $items = $entityManager2->getRepository(Item::class)->findAll();
         return $this->render('/Home.html.twig', [
-            'controller_name' => 'HomeController',
+            'controller_name' => 'FrontController',
             'categories' => $categories,
             'items' => $items,
             
@@ -32,7 +33,7 @@ class FrontController extends AbstractController
     }
 
     #[Route('/items', name: 'list_client')]
-    public function showItem(Request $request, ItemRepository $itemRepository, CategoryRepository $CategoryRepository)
+    public function showItem(Request $request, ItemRepository $itemRepository, CategoryRepository $CategoryRepository,FlashyNotifier $flashy)
     {
         $searchTerm = $request->query->get('q');
         $categoryId = $request->query->get('category_id');
@@ -50,6 +51,9 @@ class FrontController extends AbstractController
         else{
             $items = $itemRepository->findAll();
         }
+        $flashBag = $request->getSession()->getFlashBag();
+        $flashyMessage = $flashBag->get('success');
+
     
         return $this->render('Item/show.html.twig', [
             'items' => $items,
@@ -59,6 +63,7 @@ class FrontController extends AbstractController
             'startingTime' => $startingTime,
             'endingTime' => $endingTime,
             'categories' => $CategoryRepository->findAll(),
+            'flashyMessage' => $flashyMessage,
         ]);
     }
     // public function search(Request $request, ItemRepository $itemRepository)

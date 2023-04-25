@@ -12,6 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 #[Vich\Uploadable]
+#[ORM\HasLifecycleCallbacks]
 class Item
 {
     #[ORM\Id]
@@ -163,6 +164,17 @@ class Item
         return $this;
     } 
 
+    #[ORM\PostUpdate]
+    public function updateStatus()
+    {
+        $status = $this->getStatus();
+        $this->setStatus($status);
+
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($this);
+        $entityManager->flush();
+    }
+    
 
     public function getImg(): ?string
     {
