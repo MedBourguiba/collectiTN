@@ -14,7 +14,6 @@ use App\Entity\Bids;
 use Symfony\Component\Security\Core\User\UserInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 
-
 class BidsController extends AbstractController
 {
 
@@ -23,7 +22,7 @@ class BidsController extends AbstractController
     $this->flashy = $flashy;
 }
 
-    #[Route('/item/{id}/bid/update', name: 'bid_update')]
+#[Route('/item/{id}/bid/update', name: 'bid_update')]
 public function update_bid(Request $request, Item $item, BidsRepository $bidRepository, UserInterface $user): Response
 {   
     
@@ -31,37 +30,35 @@ public function update_bid(Request $request, Item $item, BidsRepository $bidRepo
     ->getRepository(Bids::class)
     ->findLastBidForItem($item->getId());
 
-    
-var_dump($lastBid->getAmount());
     $currentBid = $bidRepository->findOneBy(['item' => $item, 'User' => $user]);
     $form = $this->createForm(BidType::class, $currentBid);
     $form->handleRequest($request);
     
-   
     if ($form->isSubmitted() && $form->isValid()) {
-    
         
-         
-    
-        if (!$lastBid || $currentBid->getAmount() > $lastBid->getAmount()) {
-             var_dump($amount); 
-              $currentBid->setUpdatedAt(new \DateTime());
-              $entityManager = $this->getDoctrine()->getManager();
-              $entityManager->persist($currentBid);
-              $entityManager->flush();
-               $this->addFlash('success', 'Your bid has been updated!');
-               return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
-            }
+        $amount = $currentBid->getAmount();
+        
+        if (!$lastBid || $amount > $lastBid->getAmount()) {
+            $currentBid->setUpdatedAt(new \DateTime());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($currentBid);
+            $entityManager->flush();
+            $this->addFlash('success', 'Your bid has been updated!');
+            return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
+        }
     }
 
     return $this->render('bids/new.html.twig', [
+        'bid' => $currentBid,
         'form' => $form->createView(),
+        'lastBid' => $lastBid,
+        'lastBidAmount' => $lastBid ? $lastBid->getAmount() : null,
         'item' => $item,
     ]);
 }
 
-    #[Route('/item/{id}/bid', name: 'bid_on_item')]
-public function new(int $id, Request $request, ItemRepository $itemRepository, BidsRepository $bidRepository, UserInterface $user,FlashyNotifier $flashy): Response
+#[Route('/item/{id}/bid', name: 'bid_on_item')]
+public function new(int $id, Request $request, ItemRepository $itemRepository, BidsRepository $bidRepository, UserInterface $user, FlashyNotifier $flashy): Response
 {
     $item = $itemRepository->find($id);
     if (!$item) {
@@ -78,67 +75,44 @@ public function new(int $id, Request $request, ItemRepository $itemRepository, B
     $currentBid = new Bids();
     $currentBid->setItem($item);
     $currentBid->setUser($user);
+    $amount = $lastBid ? $lastBid->getAmount() + 1 : $item->getStartingPrice();
+    $currentBid->setAmount($amount);
 
     $form = $this->createForm(BidType::class, $currentBid);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
         $amount = $currentBid->getAmount();
+        if ($amount <= $item->getStartingPrice()) {
+            $flashy->error('Votre est inferieur au prix du départ', 'http://your-awesome-link.com');
+            return $this->redirectToRoute('bid_on_item', ['id' => $item->getId()]);
+        }
 
         if (!$lastBid || $amount > $lastBid->getAmount()) {
             $currentBid->setCreatedAt(new \DateTime());
-            
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($currentBid);
             $entityManager->flush();
-            $flashy->success('Enchère ajouté avec succès', 'http://your-awesome-link.com');
-            $this->addFlash('success', $flashy->getFlashMessage('success'));
+            $flashy->success('Votre Enchère est soumis', 'http://your-awesome-link.com');
 
-          
             return $this->redirectToRoute('list_client', ['id' => $item->getId()]);
         } else {
-            $flashy->error('Votre Enchère est faible', 'http://your-awesome-link.com');
-            $this->addFlash('error', $flashy->getFlashMessage('error'));
+            $flashy->error('Votre est inferieur au Dernier Prix', 'http://your-awesome-link.com');
+            return $this->redirectToRoute('bid_on_item', ['id' => $item->getId()]);
         }
     }
+
 
     return $this->render('bids/new.html.twig', [
         'bid' => $currentBid,
         'form' => $form->createView(),
-        'last_bid' => $lastBid,
-        'item' => $item
+        'lastBid' => $lastBid,
+        'lastBidAmount' => $lastBid ? $lastBid->getAmount() : null,
+        'item' => $item,
     ]);
 }
 
-public function setWinner(Item $item): void
-{
-    // Ensure the item status is 'closed' (status = 1)
-    if ($item->getStatus() == 1) {
-        
-    // Retrieve the highest bid for the item
-    $highestBid = $this->getDoctrine()
-        ->getRepository(Bid::class)
-        ->findLastBidForItem($item);
-
-    // If there are no bids, set the winner to null
-    if (!$highestBid) {
-        $winner = null;
-    } else {
-        // Otherwise, set the winner to the bidder of the highest bid
-        $winner = $highestBid->getUser();
-    }
-
-    // Set the winner of the item
-    $item->setWinner($winner);
-
-    // Persist the changes
-    $entityManager = $this->getDoctrine()->getManager();
-    $entityManager->persist($item);
-    $entityManager->flush();
-
-    
-   }
-}
 // public function createBidWinner(Item $item)
 // {
 //     $lastBid = $this->getDoctrine()->getRepository(Bid::class)->findLastBidForItem($item);

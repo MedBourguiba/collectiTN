@@ -7,8 +7,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry; 
 use App\Entity\Category;
 use App\Entity\Item;
+use App\Entity\Bids;
+
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ItemRepository;
+use App\Repository\BidsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CategoryRepository;
 use MercurySeries\FlashyBundle\FlashyNotifier;
@@ -66,6 +69,27 @@ class FrontController extends AbstractController
             'flashyMessage' => $flashyMessage,
         ]);
     }
+
+    #[Route('/won', name: 'won_items')]
+    public function showWonItems(): Response
+    {
+        $user = $this->getUser();
+    
+        // Retrieve the items won by the user
+        $items = $this->getDoctrine()->getRepository(Item::class)->findWonItemsByUser($user);
+    
+        // Get the last bid for each item
+        $lastBids = [];
+        foreach ($items as $item) {
+            $lastBid = $this->getDoctrine()->getRepository(Bids::class)->findLastBidForItem($item);
+            $lastBids[$item->getId()] = $lastBid;
+        }
+    
+        return $this->render('item/won.html.twig', [
+            'items' => $items,
+            'lastBids' => $lastBids,
+        ]);
+    }   
     // public function search(Request $request, ItemRepository $itemRepository)
     // {
     //     $searchTerm = $request->query->get('q');

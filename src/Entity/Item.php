@@ -164,16 +164,6 @@ class Item
         return $this;
     } 
 
-    #[ORM\PostUpdate]
-    public function updateStatus()
-    {
-        $status = $this->getStatus();
-        $this->setStatus($status);
-
-        $entityManager = $this->getEntityManager();
-        $entityManager->persist($this);
-        $entityManager->flush();
-    }
     
 
     public function getImg(): ?string
