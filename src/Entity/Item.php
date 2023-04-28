@@ -60,6 +60,9 @@ class Item
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $Partner = null;
 
+    #[ORM\ManyToOne(inversedBy: 'item_id')]
+    private ?Watchlist $watchlist = null;
+
     public function __construct()
     {
         $this->bids = new ArrayCollection();
@@ -233,6 +236,18 @@ class Item
     public function setPartner(Utilisateur $Partner): self
     {
         $this->Partner = $Partner;
+
+        return $this;
+    }
+
+    public function getWatchlist(): ?Watchlist
+    {
+        return $this->watchlist;
+    }
+
+    public function setWatchlist(?Watchlist $watchlist): self
+    {
+        $this->watchlist = $watchlist;
 
         return $this;
     }

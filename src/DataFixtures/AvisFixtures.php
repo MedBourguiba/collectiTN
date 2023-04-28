@@ -24,7 +24,7 @@ class AvisFixtures extends Fixture
         $users = [];
 
         // create 10 users
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 2000; $i++) {
             $user = new Utilisateur();
             $user->setEmail($faker->email);
             $user->setPassword($this->passwordEncoder->encodePassword(
@@ -36,7 +36,7 @@ class AvisFixtures extends Fixture
         }
 
         // create 20 random avis
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 2000; $i++) {
             $avi = new Avis();
             $avi->setCommentaire(join(" ", $faker->words(5)));
             $avi->setDateAvis($faker->dateTimeThisMonth);
