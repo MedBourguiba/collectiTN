@@ -81,14 +81,7 @@
 									</ul>
 									
 								</div>
-								<form method="post" action="{{ path('change_language') }}">
-											<select name="language">
-												<option value="en" {% if app.request.locale == 'en' %} selected {% endif %}>English</option>
-												<option value="fr" {% if app.request.locale == 'fr' %} selected {% endif %}>French</option>
-												<option value="es" {% if app.request.locale == 'es' %} selected {% endif %}>Spanish</option>
-											</select>
-											<button type="submit">Change language</button>
-										</form>
+								
 							</nav>
 						</div>
 					</div>

@@ -61,18 +61,6 @@ class FrontController extends AbstractController
             'categories' => $CategoryRepository->findAll(),
         ]);
     }
-    #[Route('/change-language', name: 'change_language')]
-public function changeLanguage(Request $request): Response
-{
-    // Get the selected language from the form data
-    $language = $request->request->get('language');
-
-    // Set the language in the session
-    $request->getSession()->set('_locale', $language);
-
-    // Redirect back to the previous page
-    return $this->redirectToRoute('app_home');
-}
 
     // public function search(Request $request, ItemRepository $itemRepository)
     // {

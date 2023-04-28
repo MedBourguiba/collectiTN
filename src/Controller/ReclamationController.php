@@ -26,7 +26,7 @@ public function index(ReclamationRepository $reclamationRepository): Response
 }
 
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReclamationRepository $reclamationRepository,MailerService $mailer): Response
+    public function new(Request $request, ReclamationRepository $reclamationRepository): Response
     {
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
@@ -38,8 +38,7 @@ public function index(ReclamationRepository $reclamationRepository): Response
             $message = " a été ajouté avec succès";
 
             return $this->redirectToRoute('app_reclamation_new', [], Response::HTTP_SEE_OTHER);
-            $mailMessage = $reclamation->getSujet().''.$reclamation->getUser().''.$message;
-            $mailer->sendEmail(content:$mailMessage);
+            
         }
 
         return $this->renderForm('reclamation/new.html.twig', [
