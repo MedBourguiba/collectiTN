@@ -94,6 +94,17 @@ public function advancedSearch($startingTime, $endingTime, $startingPrice, $cate
 
     return $qb->getQuery()->getResult();
 }
+public function findWonItemsByUser($user)
+{
+    return $this->createQueryBuilder('i')
+        ->join('i.bids', 'b')
+        ->andWhere('b.User = :user')
+        ->andWhere('i.winner = :winner')
+        ->setParameter('user', $user)
+        ->setParameter('winner', $user)
+        ->getQuery()
+        ->getResult();
+}
 
 //    public function findOneBySomeField($value): ?Item
 //    {

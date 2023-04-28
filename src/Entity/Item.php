@@ -12,6 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 #[Vich\Uploadable]
+#[ORM\HasLifecycleCallbacks]
 class Item
 {
     #[ORM\Id]
@@ -59,6 +60,9 @@ class Item
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $Partner = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Utilisateur $winner = null;
 
     public function __construct()
     {
@@ -160,6 +164,7 @@ class Item
         return $this;
     } 
 
+    
 
     public function getImg(): ?string
     {
@@ -233,6 +238,18 @@ class Item
     public function setPartner(Utilisateur $Partner): self
     {
         $this->Partner = $Partner;
+
+        return $this;
+    }
+
+    public function getWinner(): ?Utilisateur
+    {
+        return $this->winner;
+    }
+
+    public function setWinner(?Utilisateur $winner): self
+    {
+        $this->winner = $winner;
 
         return $this;
     }

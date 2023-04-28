@@ -21,13 +21,13 @@ final class Version20230419055938 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
        
-        $this->addSql('ALTER TABLE payment CHANGE amount amount FLOAT NOT NULL');
+        // $this->addSql('ALTER TABLE payment CHANGE amount amount FLOAT NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE item CHANGE partner_id partner_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE payment CHANGE amount amount DOUBLE PRECISION NOT NULL');
+        // $this->addSql('ALTER TABLE item CHANGE partner_id partner_id INT DEFAULT NULL');
+        // $this->addSql('ALTER TABLE payment CHANGE amount amount DOUBLE PRECISION NOT NULL');
     }
 }
