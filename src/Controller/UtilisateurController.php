@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/utilisateur')]
 class UtilisateurController extends AbstractController
@@ -25,20 +26,26 @@ class UtilisateurController extends AbstractController
         $this->passwordEncoder = $passwordEncoder;
     }
     #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
-    public function index(UtilisateurRepository $utilisateurRepository,Request $request): Response
-    {
-        $searchTerm = $request->query->get('Q');
+
+    public function index(UtilisateurRepository $utilisateurRepository,PaginatorInterface $paginator ,Request $request  ): Response
+    {   
+        $searchTerm = $request->query->get('q');
         $utilisateurs = [];
         if (!empty($searchTerm)) {
-            $utilisateurs = $utilisateurRepository->search($searchTerm);
+            $utilisateurs = $utilisateurRepository->searchUsers($searchTerm);
+
         }
         else{
             $utilisateurs = $utilisateurRepository->findAll();
         }
+
+        $utilisateurs=$paginator->paginate($utilisateurs,$request->query->getInt('page',1),2);
+
         return $this->render('utilisateur/index.html.twig', [
             'utilisateurs' => $utilisateurs,
             'searchTerm' => $searchTerm,
         ]);
+
     }
 
     #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
@@ -59,7 +66,7 @@ class UtilisateurController extends AbstractController
     
             // send email to the user
             $email = (new Email())
-                ->from('abourguiba510@gmail.com')
+                ->from('azizabdouli601@gmail.com')
                 ->to($utilisateur->getEmail())
                 ->subject('Welcome to our site')
                 ->text('Here is your temporary password: '.$password);

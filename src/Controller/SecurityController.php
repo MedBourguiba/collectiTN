@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Type\Enum\UserRoleEnum;
 use App\Type\UserRoleEnumType;
+use ReCaptcha\ReCaptcha;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,6 +69,7 @@ class SecurityController extends AbstractController
         $this->addFlash('success', 'Vous avez été déconnecté.');
         return $this->redirectToRoute('app_login');
     }
+   
 
 
       
