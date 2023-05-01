@@ -26,17 +26,21 @@ class UtilisateurController extends AbstractController
         $this->passwordEncoder = $passwordEncoder;
     }
     #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
+
     public function index(UtilisateurRepository $utilisateurRepository,PaginatorInterface $paginator ,Request $request  ): Response
     {   
         $searchTerm = $request->query->get('q');
         $utilisateurs = [];
         if (!empty($searchTerm)) {
             $utilisateurs = $utilisateurRepository->searchUsers($searchTerm);
+
         }
         else{
             $utilisateurs = $utilisateurRepository->findAll();
         }
+
         $utilisateurs=$paginator->paginate($utilisateurs,$request->query->getInt('page',1),2);
+
         return $this->render('utilisateur/index.html.twig', [
             'utilisateurs' => $utilisateurs,
             'searchTerm' => $searchTerm,

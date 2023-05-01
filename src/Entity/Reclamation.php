@@ -16,16 +16,16 @@ class Reclamation
     private ?int $id = null;
 
     #[ORM\Column(type: "string", length: 255)]
-    #[Assert\NotBlank(message: 'sujet vide')]
+    #[Assert\NotBlank(message: 'Le sujet de la réclamation ne doit pas être vide')]
     private ?string $sujet = null;
 
     #[ORM\Column(type: "text", length: 65535)]
-    #[Assert\NotBlank(message: 'message vide')]
+    #[Assert\NotBlank(message: 'Le message de la réclamation ne doit pas être vide')]
     private ?string $message = null;
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(type: "datetime", nullable: false)]
     private ?\DateTimeInterface $dateReclamation = null;
-
+    
     #[ORM\ManyToOne(targetEntity: Item::class)]
     #[ORM\JoinColumn(nullable: true)]
     private ?Item $item = null;
@@ -33,6 +33,20 @@ class Reclamation
     #[ORM\ManyToOne(targetEntity: "Utilisateur")]
     #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
     private ?Utilisateur $user = null;
+
+    #[ORM\Column(type: "string", length: 255)]
+    #[Assert\NotBlank(message: 'Le nom ne doit pas être vide')]
+    private ?string $name = null;
+
+    #[ORM\Column(type: "string", length: 255)]
+    #[Assert\NotBlank(message: 'L\'email ne doit pas être vide')]
+    #[Assert\Email(message: 'L\'email "{{ value }}" n\'est pas valide.')]
+    private ?string $email = null;
+
+    public function __construct()
+    {
+        $this->dateReclamation = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -75,30 +89,53 @@ class Reclamation
         return $this;
     }
 
-    public function getItem(): ?Items
+    public function getItem(): ?Item
     {
         return $this->item;
     }
 
-    public function setItem(?Items $item): self
+    public function setItem(?Item $item): self
     {
         $this->item = $item;
 
         return $this;
     }
 
-    public function getUser(): ?Users
+    public function getUser(): ?Utilisateur
     {
         return $this->user;
     }
 
-    public function setUser(?Users $user): self
+    public function setUser(?Utilisateur $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+   
+    }
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
     public function validate()
     {
         if (empty($this->sujet)) {
@@ -109,4 +146,5 @@ class Reclamation
             throw new \Exception('Le message de la réclamation ne doit pas être vide');
         }
     }
+
 }

@@ -17,6 +17,7 @@
    <link href="{{asset ('front/plugins/jquery-nice-select/css/nice-select.css')}}" rel="stylesheet">
   
    <link href="{{asset ('front/css/style.css')}}" rel="stylesheet"> 
+   <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
   {% endblock %}
 
   {% block javascripts %}
@@ -28,6 +29,8 @@
     <script src="{{asset ('front/plugins/raty/jquery.raty-fa.js')}}"></script>
     <script src="{{asset ('front/plugins/slick/slick.min.js')}}"></script>
     <script src="{{ asset ('front/plugins/jquery-nice-select/js/jquery.nice-select.min.js')}}"></script>
+     <script src="//code.jquery.com/jquery.js"></script>
+     <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
 <!-- google map -->
     <script src="{{asset ('front/js/script.js')}}"></script>
   {% endblock %}
@@ -59,7 +62,7 @@
 								<a class="nav-link" href="index.html">Profile</a>
 							</li>
               	<li class="nav-item ">
-								<a class="nav-link" href="index.html">Reclamer</a>
+								<a class="nav-link" href="{{path('app_reclamation_new')}}">Reclamer</a>
 							</li>
                <li class="nav-item ">
 								<a class="nav-link" href="index.html">Musée</a>
@@ -67,7 +70,7 @@
 						</ul>
 						<ul class="navbar-nav ml-auto mt-10">
 							<li class="nav-item">
-								<a class="nav-link text-white add-button" href="ad-listing.html"><i class="fa fa-plus-circle"></i> Ma collection</a>
+								<a class="nav-link text-white add-button" href="{{path('won_items')}}"><i class="fa fa-plus-circle"></i> Ma collection</a>
 							</li>
               <li class="nav-item">
 								<a class="nav-link login-button" href="{{path('app_logout')}}">Déconnecter</a>
@@ -156,6 +159,6 @@
   <!-- Container End -->
 </footer> 
  {% endblock %}
-
+    
 </body>
 </html>

@@ -30,7 +30,7 @@ class Avis
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $commentaire = null;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime', nullable: false)]
     private ?\DateTimeInterface $dateAvis = null;
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
@@ -40,6 +40,10 @@ class Avis
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $Partenaire = null;
+    public function __construct()
+    {
+        $this->dateAvis = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -83,14 +87,14 @@ class Avis
     }
  
 
-    public function getClient(): ?Users
+    public function getClient(): ?Utilisateur
     {
-        return $this->user;
+        return $this->client;
     }
 
-    public function setClient(?Users $user): self
+    public function setClient(?utilisateur $user): self
     {
-        $this->user = $user;
+        $this->client = $user;
 
         return $this;
     }

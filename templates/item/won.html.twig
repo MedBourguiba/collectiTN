@@ -1,0 +1,57 @@
+{% extends 'frontClient.html.twig' %}
+{% block body %}
+<section "
+<div class="container">
+  <div class="row"
+   <div class="container">
+          <div class="product-grid-list">
+                    <div class="row">
+                        {% for item in items %}
+                                    {% set img_path = 'uploads/item_images/' ~ item.getimg %}
+                                       <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                                          <div class="card " style="width: 15rem;" >
+                                                 <div class="thumb-content">
+                                                    <a href="#">
+                                                           <img class="card-img-top img-fluid" src="{{ asset(img_path) }}" alt="Card image cap">
+                                                    </a>
+                                                 </div>
+                                               <div class="card-body">
+                                                   <h4 class="card-title"><a href="#">{{ item.name }}</a></h4>
+                                                   <ul class="list-inline product-meta">
+                                                      <li class="list-inline-item">
+                                                         <a ><i class="fa fa-folder-open-o"></i>{{ item.category.name }}</a>
+                                                      </li>
+                                                      <li class="list-inline-item">
+                                                         <i class="fa fa-calendar"></i> <span><strong>Date debut : </strong>{{ item.getStartTime|date('d M Y') }}
+                                                       </li>
+                                                      <li class="list-inline-item">
+                                                         <i class="fa fa-calendar"></i> <span><strong>Date fin : </strong>{{ item.getEndTime|date('d M Y') }}
+                                                      </li>
+                                                      <li class="list-inline-item">
+                                                         <a ><i></i> <span><strong>Prix départ : </strong>{{ item.getStartingPrice() }}</a>
+                                                      </li>
+                                                       <li class="list-inline-item">
+                                                         <a ><i></i> <span><strong>dernier prix</strong>{{ lastBids[item.id].getAmount() }}</a>
+                                                      </li>
+                                                   </ul>
+                                                  {% if item.Status==1 %}
+                                                   <div class="product-action">
+                                                      <a href="{{ path('checkout', {'itemId': item.id}) }}" class="btn btn-primary">checkout</a>
+                                                   </div>
+                                                   {%else%}
+                                                      <strong>acheté !!</strong>
+                                                   {%endif%}
+
+                                               </div>
+                                          </div>
+                                      </div>
+                        {% endfor %}
+                    </div>
+              </div>	
+      
+   </div>
+ </div>
+</div>
+
+</section>
+{% endblock %}

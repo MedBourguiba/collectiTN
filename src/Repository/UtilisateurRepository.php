@@ -50,6 +50,7 @@ class UtilisateurRepository extends ServiceEntityRepository
     }
 
     public function searchUsers($searchTerm)
+
 {
     $qb = $this->createQueryBuilder('u')
         ->andWhere('u.nom LIKE :searchTerm ')
