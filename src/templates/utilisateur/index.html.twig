@@ -1,0 +1,53 @@
+{% extends 'backAdmin.html.twig' %}
+
+{% block title %}Utilisateur index{% endblock %}
+
+{% block body %}
+<div class="advance-search nice-select-white">
+					<form>
+						<div class="form-row align-items-center">
+						   <form class="form-inline my-2 my-lg-0" action="{{ path('app_utilisateur_index') }}" method="get">
+                               <input class="form-control mr-sm-2" t                            ype="text" placeholder="Search" name="q">
+                               <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                           </form>
+
+						</div>
+					</form>
+				</div>
+    <h1>Utilisateur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>nom</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for utilisateur in utilisateurs %}
+            <tr>
+                <td>{{ utilisateur.id }}</td>
+                <td>{{ utilisateur.nom }}</td>
+                <td>{{ utilisateur.email }}</td>
+                <td>{{ utilisateur.roles|join(', ') }}</td>
+                <td>{{ utilisateur.password }}</td>
+                <td>
+                    <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">show</a>
+                    <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{knp_pagination_render(utilisateurs)}}
+
+    <a href="{{ path('app_utilisateur_new') }}">Create new</a>
+{% endblock %}
