@@ -49,6 +49,18 @@ class UtilisateurRepository extends ServiceEntityRepository
         $this->save($user, true);
     }
 
+    public function searchUsers($searchTerm)
+{
+    $qb = $this->createQueryBuilder('u')
+        ->andWhere('u.nom LIKE :searchTerm ')
+        ->setParameter('searchTerm', '%'.$searchTerm.'%')
+        ->orderBy('u.id', 'DESC')
+        ->getQuery();
+
+    return $qb->getResult();
+}
+
+
 //    /**
 //     * @return Utilisateur[] Returns an array of Utilisateur objects
 //     */

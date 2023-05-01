@@ -20,12 +20,6 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use App\Type\Enum\UserRoleEnum;
 use App\Type\UserRoleEnumType;
 
-
-
-
-
-
-
 class RegistrationController extends AbstractController
 {
     
