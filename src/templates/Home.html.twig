@@ -1,0 +1,108 @@
+{% extends 'frontClient.html.twig' %}
+{% block body %}
+<section class="hero-area bg-1 text-center overly">
+	<!-- Container Start -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<!-- Header Contetnt -->
+				<div class="content-block">
+					<h1>Bienvenue sur Collecti </h1>
+					<p> Rejoignez notre communauté pour découvrir des trésors rares et uniques provenant de nos partenaires vérifiés. Faites de vos enchères une expérience inoubliable avec Collecti.</p>
+					<div class="short-popular-category-list text-center">
+						<h2>Les catégories</h2>
+                          <ul class="list-inline">
+                           {% for category in categories %}
+                               <li class="list-inline-item">
+                               <a href="!#">{{ category.name }}</a>
+                                </li>
+                               {% endfor %}
+                           </ul>
+					</div>
+
+				</div>
+				<!-- Advance Search -->
+				<div class="advance-search">
+					<div class="container">
+						<div class="row justify-content-center">
+							<div class="col-lg-12 col-md-12 align-content-center">
+								<form>
+									<div class="form-row">
+										<div class="form-group col-xl-4 col-lg-3 col-md-6">
+											<input type="text" class="form-control my-2 my-lg-1" id="inputtext4"
+												placeholder="Qu'est que vous cherchez ?">
+										</div>
+									   <div class="form-group col-lg-3 col-md-6">
+                                        <select class="w-100 form-control mt-lg-1 mt-md-2">
+                                           <option>Categorie</option>
+                                           {% for category in categories %}
+                                           <option value="{{ category.id }}">{{ category.name }}</option>
+                                           {% endfor %}
+                                        </select>
+                                        </div>
+	
+										<div class="form-group col-xl-2 col-lg-3 col-md-6 align-self-center">
+											<button type="submit" class="btn btn-primary active w-100">Chercher</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Container End -->
+</section>
+<section class="popular-deals section bg-gray">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="section-title">
+					<h2>Les Chefs-d'oeuvres</h2>
+					<p>Decouvrer les dérnieres piéce de collection</p>
+				</div>
+			</div>
+		</div>
+      <div class="row">
+                {% for item in items %}
+                                 {% if item.status == 0 %}
+                                      {% set img_path = 'uploads/item_images/' ~ item.getimg %}
+                                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                                           <div class="card " style="width: 15rem;" >
+                                                 <div class="thumb-content">
+                                                    <a href="#">
+                                                           <img class="card-img-top img-fluid" src="{{ asset(img_path) }}" alt="Card image cap">
+                                                    </a>
+                                                 </div>
+                                               <div class="card-body">
+                                                   <h4 class="card-title"><a href="#">{{ item.name }}</a></h4>
+                                                   <ul class="list-inline product-meta">
+                                                      <li class="list-inline-item">
+                                                         <a ><i class="fa fa-folder-open-o"></i>{{ item.category.name }}</a>
+                                                      </li>
+                                                      <li class="list-inline-item">
+                                                         <i class="fa fa-calendar"></i> <span><strong>Date debut : </strong>{{ item.getStartTime|date('d M Y') }}
+                                                       </li>
+                                                      <li class="list-inline-item">
+                                                         <i class="fa fa-calendar"></i> <span><strong>Date fin : </strong>{{ item.getEndTime|date('d M Y') }}
+                                                      </li>
+                                                      <li class="list-inline-item">
+                                                         <a ><i ></i> <span><strong>Prix départ : </strong>{{ item.getStartingPrice() }}</a>
+                                                      </li>
+                                                   </ul>
+         
+                                                   <div class="product-action">
+                                                      <a href="#" class="btn btn-primary">Enchèrer</a>
+                                                   </div>
+                                               </div>
+                                            </div>
+                                      </div>
+                                 {% endif %}
+                             {% endfor %}
+                        
+         </div>
+    </div>
+</section>
+{% endblock %}
