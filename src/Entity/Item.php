@@ -8,37 +8,47 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 #[Vich\Uploadable]
+
 class Item
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['Items'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['Items'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['Items'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['Items'])]
     private ?\DateTimeInterface $start_time = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['Items'])]
     private ?\DateTimeInterface $end_time = null;
 
     #[ORM\Column]
+    #[Groups(['Items'])]
     private ?float $starting_price = null;
 
     #[ORM\Column]
+    #[Groups(['Items'])]
     private ?float $estimated_price = null;
     
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Groups(['Items'])]
     private ?int $status = null;
 
     #[ORM\Column(length: 255)]
@@ -59,6 +69,9 @@ class Item
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $Partner = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Utilisateur $winner = null;
 
     public function __construct()
     {
@@ -144,13 +157,7 @@ class Item
 
     public function getStatus(): int
     {
-        if ($this->status == 2) {
-            return 2; // item is bought
-        } elseif ($this->end_time<= new \DateTime()) {
-            return 1; // item is expired
-        } else {
-            return 0; // item is available
-        }
+        return $this->status;
     }
 
     public function setStatus(int $status): self
@@ -160,6 +167,7 @@ class Item
         return $this;
     } 
 
+    
 
     public function getImg(): ?string
     {
@@ -233,6 +241,18 @@ class Item
     public function setPartner(Utilisateur $Partner): self
     {
         $this->Partner = $Partner;
+
+        return $this;
+    }
+
+    public function getWinner(): ?Utilisateur
+    {
+        return $this->winner;
+    }
+
+    public function setWinner(?Utilisateur $winner): self
+    {
+        $this->winner = $winner;
 
         return $this;
     }

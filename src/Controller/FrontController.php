@@ -7,10 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Persistence\ManagerRegistry; 
 use App\Entity\Category;
 use App\Entity\Item;
+use App\Entity\Bids;
+
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ItemRepository;
+use App\Repository\BidsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CategoryRepository;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 
 #[Route('/client')]
 class FrontController extends AbstractController
@@ -23,7 +27,7 @@ class FrontController extends AbstractController
         $entityManager2 = $doctrine2->getManager();
         $items = $entityManager2->getRepository(Item::class)->findAll();
         return $this->render('/Home.html.twig', [
-            'controller_name' => 'HomeController',
+            'controller_name' => 'FrontController',
             'categories' => $categories,
             'items' => $items,
             
@@ -32,7 +36,7 @@ class FrontController extends AbstractController
     }
 
     #[Route('/items', name: 'list_client')]
-    public function showItem(Request $request, ItemRepository $itemRepository, CategoryRepository $CategoryRepository)
+    public function showItem(Request $request, ItemRepository $itemRepository, CategoryRepository $CategoryRepository,FlashyNotifier $flashy)
     {
         $searchTerm = $request->query->get('q');
         $categoryId = $request->query->get('category_id');
@@ -50,6 +54,9 @@ class FrontController extends AbstractController
         else{
             $items = $itemRepository->findAll();
         }
+        $flashBag = $request->getSession()->getFlashBag();
+        $flashyMessage = $flashBag->get('success');
+
     
         return $this->render('Item/show.html.twig', [
             'items' => $items,
@@ -59,8 +66,30 @@ class FrontController extends AbstractController
             'startingTime' => $startingTime,
             'endingTime' => $endingTime,
             'categories' => $CategoryRepository->findAll(),
+            'flashyMessage' => $flashyMessage,
         ]);
     }
+
+    #[Route('/won', name: 'won_items')]
+    public function showWonItems(): Response
+    {
+        $user = $this->getUser();
+    
+        // Retrieve the items won by the user
+        $items = $this->getDoctrine()->getRepository(Item::class)->findWonItemsByUser($user);
+    
+        // Get the last bid for each item
+        $lastBids = [];
+        foreach ($items as $item) {
+            $lastBid = $this->getDoctrine()->getRepository(Bids::class)->findLastBidForItem($item);
+            $lastBids[$item->getId()] = $lastBid;
+        }
+    
+        return $this->render('item/won.html.twig', [
+            'items' => $items,
+            'lastBids' => $lastBids,
+        ]);
+    }   
     // public function search(Request $request, ItemRepository $itemRepository)
     // {
     //     $searchTerm = $request->query->get('q');

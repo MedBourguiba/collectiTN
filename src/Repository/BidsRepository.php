@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Repository;
-
+use App\Entity\Item;
 use App\Entity\Bids;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,6 +39,35 @@ class BidsRepository extends ServiceEntityRepository
         }
     }
 
+   public function findLastBidForItem($itemId)
+{
+    $entityManager = $this->getEntityManager();
+
+    $query = $entityManager->createQuery(
+        'SELECT b
+        FROM App\Entity\Bids b
+        JOIN b.item i
+        WHERE i.id = :itemId
+        ORDER BY b.amount DESC'
+    )->setParameter('itemId', $itemId)
+     ->setMaxResults(1);
+
+    return $query->getOneOrNullResult();
+}
+
+
+    public function findCurrentBidForItemByUser(int $itemId, int $userId): ?Bids
+{
+    return $this->createQueryBuilder('b')
+        ->andWhere('b.item = :itemId')
+        ->andWhere('b.User = :userId')
+        ->setParameter('itemId', $itemId)
+        ->setParameter('userId', $userId)
+        ->orderBy('b.amount', 'DESC')
+        ->setMaxResults(1)
+        ->getQuery()
+        ->getOneOrNullResult();
+}
 //    /**
 //     * @return Bids[] Returns an array of Bids objects
 //     */

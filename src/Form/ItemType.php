@@ -41,12 +41,7 @@ class ItemType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     new Length(['min' => 2, 'max' => 255]),
-                    new Callback(function ($value, ExecutionContextInterface $context) {
-                        if (!ctype_alpha(str_replace(' ', '', $value))) {
-                            $context->buildViolation('le nom doit etre seulement en lettres .')
-                                ->addViolation();
-                        }
-                    })
+                    
                 ]
             ])
             ->add('description', TextType::class, [
@@ -55,12 +50,7 @@ class ItemType extends AbstractType
                     new Length([
                         'min' => 10, 'max' => 1000,'minMessage' => 'La description doit contenir au moins {{ limit }} caractères.',
                         'maxMessage' => 'La description ne peut pas contenir plus de {{ limit }} caractères.',]),
-                    new Callback(function ($value, ExecutionContextInterface $context) {
-                        if (!ctype_alpha(str_replace(' ', '', $value))) {
-                            $context->buildViolation('la description doit en lettres seulement ')
-                                ->addViolation();
-                        }
-                    })
+                
                 ]
             ])
             ->add('start_time', null, [
