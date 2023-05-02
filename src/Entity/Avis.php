@@ -18,16 +18,14 @@ class Avis
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Veuillez indiquer une note.")
-     * @Assert\Range(
-     *     min=1,
-     *     max=5,
-     *     notInRangeMessage="La note doit être comprise entre {{ min }} et {{ max }}.",
-     *     invalidMessage="Veuillez indiquer une note valide."
-     * )
-     */
+    #[ORM\Column(type: "integer")]
+#[Assert\NotBlank(message: "Veuillez indiquer une note.")]
+#[Assert\Range(
+    min: 1,
+    max: 5,
+    notInRangeMessage: "La note doit être comprise entre {{ min }} et {{ max }}.",
+    invalidMessage: "Veuillez indiquer une note valide."
+)]
     private ?int $note = null;
 
     #[ORM\Column(type: 'text', nullable: true)]

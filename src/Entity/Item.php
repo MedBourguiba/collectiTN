@@ -72,8 +72,8 @@ class Item
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Utilisateur $winner = null;
-    #[ORM\ManyToOne(inversedBy: 'item_id')]
-    private ?Watchlist $watchlist = null;
+
+   
 
     public function __construct()
     {
@@ -257,15 +257,7 @@ class Item
         $this->winner = $winner;
    
     }
-     public function getWatchlist(): ?Watchlist
-    {
-        return $this->watchlist;
-    }
 
-    public function setWatchlist(?Watchlist $watchlist): self
-    {
-        $this->watchlist = $watchlist;
 
-        return $this;
-    }
+
 }
