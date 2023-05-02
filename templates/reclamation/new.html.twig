@@ -1,6 +1,8 @@
 {% extends 'frontClient.html.twig' %}
 
 {% block body %}
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 	<!-- page title -->
 	<section
 		class="page-title">
@@ -10,7 +12,7 @@
 				<div
 					class="col-md-8 offset-md-2 text-center">
 					<!-- Title text -->
-					<h3>Contact Us</h3>
+					<h3>Reclamer</h3>
 				</div>
 			</div>
 		</div>
@@ -45,9 +47,13 @@
 						{{ form_row(form.sujet, {'attr': {'class': 'form-control w-100', 'required': 'required'}}) }}
 						{{ form_row(form.message, {'attr': {'placeholder': 'Message *', 'class': 'border w-100 p-3 mt-3 mt-lg-4', 'required': 'required'}}) }}
 						<div class="btn-grounp">
-							<button type="submit" class="btn btn-primary mt-2 float-right">SUBMIT</button>
+						 <div  class="g-recaptcha" data-sitekey="6LfhRMUlAAAAAHuQ5preC4PnzCX6S6R21gRyLu9X" data-callback="enableSubmitBtn"></div>
+							<button id="chekout-btn" type="submit" class="btn btn-primary mt-2 float-right" disabled>SUBMIT</button>
+
 						</div>
+
 					</fieldset>
+
 					{{ form_end(form) }}
 				</div>
 			</div>
@@ -60,6 +66,17 @@
                 document.getElementById("reclamation-form").submit(); // submit the form
             });
 		</script> #}
-	</section>
+		<script>
+		// Sélectionner le bouton "submit"
+		const submitBtn = document.querySelector('#chekout-btn');
+
+		// Désactiver le bouton "submit" initialement
+		submitBtn.disabled = true;
+
+		// Exécuter cette fonction chaque fois que le reCAPTCHA est résolu avec succès
+		function enableSubmitBtn() {
+		  submitBtn.disabled = false;
+		}
+	</script>
 	<!-- contact us end-->
 {% endblock %}

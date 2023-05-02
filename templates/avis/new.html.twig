@@ -1,13 +1,42 @@
 {% extends 'frontClient.html.twig' %}
 
 {% block body %}
-    <h1>Create new Avis</h1>
+	<!-- page title -->
+	<section class="page-title">
+		<!-- Container Start -->
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2 text-center">
+					<!-- Title text -->
+					<h3>Create new Avis</h3>
+				</div>
+			</div>
+		</div>
+		<!-- Container End -->
+	</section>
+	<!-- page title -->
 
-    {{ form_start(form) }}
-    {{ form_widget(form.note) }}
-    {{ form_widget(form.commentaire) }}
-    <button type="submit">Create</button>
-    {{ form_end(form) }}
+	<!-- contact us start-->
+	<section class="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					{{ form_start(form) }}
+					<fieldset class="p-4">
+						{{ form_widget(form.note, {'attr': {'placeholder': 'Note *', 'class': 'form-control', 'required': 'required'}}) }}
+						{{ form_widget(form.commentaire, {'attr': {'placeholder': 'Commentaire *', 'class': 'border w-100 p-3 mt-3 mt-lg-4', 'required': 'required'}}) }}
+						<div class="btn-grounp">
+							<button type="submit" class="btn btn-primary mt-2 float-right">Create</button>
+						</div>
+					</fieldset>
+					{{ form_end(form) }}
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- contact us end-->
 
-    <a href="{{ path('app_avis_index') }}">back to list</a>
+	<div class="text-center">
+		<a href="{{ path('app_avis_index') }}">back to list</a>
+	</div>
 {% endblock %}

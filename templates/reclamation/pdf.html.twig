@@ -1,0 +1,42 @@
+
+{% extends 'base.html.twig' %}
+{% block title %} {{ reclamation.name }}</h1>{% endblock %}
+{% block body %}
+    <h1 style="color: #757aD8" style="text-align: center">  Reclamation de {{ reclamation.name }} :</h1>
+
+    <table >
+        <thead>
+
+            <tr>
+                <th scope="col" style="color: #b21f2d">Nom</th>
+                <td >{{ reclamation.name }}</td>
+            </tr>
+            <tr>
+                <th scope="col" style="color: #b21f2d">message :</th>
+                <td>{{ reclamation.message }}</td>
+            </tr>
+            <tr>
+                <th scope="col" style="color: #b21f2d">email :</th>
+                <td>{{ reclamation.email }}</td>
+            </tr>
+            <tr>
+                <th scope="col" style="color: #b21f2d">sujet :</th>
+                <td>{{ reclamation.sujet }}</td>
+            </tr>
+            
+            
+    </table>
+
+
+  
+
+
+
+       
+    
+
+        
+
+   
+
+{% endblock %}

@@ -1,8 +1,15 @@
 {% extends 'backAdmin.html.twig' %}
 
-
 {% block body %}
     <h1>Reclamation</h1>
+
+    <div id="search-container">
+        <form id="search-form">
+            <input type="text" id="query" name="query" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
+        <div id="search-results"></div>
+    </div>
 
     <table class="table">
         <thead>
@@ -16,29 +23,97 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="reclamation-table-body">
             {% for reclamation in reclamations %}
-            <tr>
-                <td>{{ reclamation.id }}</td>
-                <td>{{ reclamation.sujet }}</td>
-                <td>{{ reclamation.message }}</td>
-                <td>{{ reclamation.name }}</td>
-                <td>{{ reclamation.email }}</td>
-                <td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
-                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
-                    {{ include('reclamation/_delete_form.html.twig') }}
-                </td>
-            </tr>
+                <tr>
+                    <td>{{ reclamation.id }}</td>
+                    <td>{{ reclamation.sujet }}</td>
+                    <td>{{ reclamation.message }}</td>
+                    <td>{{ reclamation.name }}</td>
+                    <td>{{ reclamation.email }}</td>
+                    <td>{{ reclamation.dateReclamation ? reclamation.dateReclamation|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
+                        <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
+                        <a href="{{ path('app_reclamation.pdf', {'id': reclamation.id}) }}">PDF</a>
+                        <td> {{ include('reclamation/_delete_form.html.twig') }} </td>
+                    </td>
+                </tr>
             {% else %}
-            <tr>
-                <td colspan="7">No reclamations found</td>
-            </tr>
+                <tr>
+                    <td colspan="7">No reclamations found</td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <a href="{{ path('app_reclamation_new') }}">Create new reclamation</a>
-{% endblock %}
 
+    <script>
+        // Handle search form submit event
+        document.querySelector('#search-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submit behavior
+            const query = document.querySelector('#query').value; // Get search query
+            searchReclamations(query); // Call search function
+        });
+
+        // Function to search reclamations with AJAX
+        function searchReclamations(query) {
+            const url = "{{ path('app_reclamation_advanced_search') }}"; // URL to controller action
+            const params = new URLSearchParams({ query }); // Create search params object
+            const tableBody = document.querySelector('#reclamation-table-body'); // Get table body
+            const resultsContainer = document.querySelector('#search-results'); // Get search results container
+            resultsContainer.innerHTML = 'Loading...'; // Display loading message
+            fetch(`${url}?${params}`, { method: 'GET' }) // Make GET request to controller action
+                .then(response => response.json()) // Parse response as JSON
+                .then(results => {
+                    resultsContainer.innerHTML = ''; // Clear search results container
+                    results.forEach(reclamation => { // Loop through results and add them to the table body
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${reclamation.id}</td>
+                            <td>${reclamation.sujet}</td>
+                            <td>${reclamation.message}</td>
+                            <td>${reclamation.name}</td>
+                            <td>${reclamation.email}</td>
+                            <td>${reclamation.dateReclamation ? new Date(reclamation.dateReclamation).toLocaleString() : ''}
+                            </td>
+                            <td>
+                       <button class="btn btn-primary" onclick="showReclamation(${reclamation.id})">View</button> </td>`;
+tableBody.appendChild(row); // Add row to table body
+});
+})
+.catch(error => {
+console.error(error) ; // Log any errors to the console
+resultsContainer.innerHTML = 'Error loading results. Please try again later. ' +error ; // Display error message
+});
+}
+// Function to show reclamation details
+     {# function showReclamation(id) {
+        const url = "{{ path('app_reclamation_show', {'id': reclamation.id}) }}"; // URL to controller action
+        window.location.href = url; // Redirect to reclamation details page
+    } 
+    </script> #}
+    {# <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>$(document).ready(function() {
+            // Function to trigger search when search fields change
+            function search() {
+            var searchTerm = $('#query').val();
+            $.ajax({
+                url: '{{ path('search_reclamation') }}',
+                type: 'GET',
+                data: {
+                    q: searchTerm
+                },
+                success: function(response) {
+                    $('tbody').html(response);
+                }
+            });
+            }
+            // Trigger search when search field changes
+            $('#query').on('input', function() {
+                search();
+            });
+        });
+    </script> #}
+{% endblock %}  

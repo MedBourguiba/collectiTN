@@ -2,3 +2,14 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
+# app/config/routes.yaml
+change_language:
+    path: /change-language
+    controller: App\Controller\HomeController::changeLanguage
+app_reclamation_advanced_search:
+    path: /reclamation/advanced-search
+    controller: App\Controller\ReclamationController::advancedSearch
+search_music:
+    path: /search/reclamation
+    methods: [GET]
+    controller: App\Controller\ReclamationController::search

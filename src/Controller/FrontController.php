@@ -161,6 +161,7 @@ public function editProfile(Request $request, UserPasswordEncoderInterface $pass
     //         'searchTerm' => $searchTerm,
     //     ]);
     // }
+    
 
 }
 
