@@ -13,6 +13,10 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
  use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+ use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+ use Symfony\Component\Form\Extension\Core\Type\DateType;
+ use Symfony\Component\Validator\Constraints\File;
+ use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -23,7 +27,13 @@ class RegistrationFormType extends AbstractType
             ->add('prenom')
             ->add('email') 
             ->add('telephone')
-            ->add('datenaiss')
+            ->add('datenaiss', null, [
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => ['class' => 'form-control mb-3', 'type' => 'date'],
+                'label' => 'Date de Naissance*'
+            ])
+
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -32,6 +42,14 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+
+            ->add('img', FileType::class, [
+                'data_class' => null,
+                'constraints' => [
+            new NotBlank(),
+    
+        ],
+      ])
             ->add('isVerified', HiddenType::class, [
                 'data' => '0'
             ])

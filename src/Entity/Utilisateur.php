@@ -11,6 +11,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 /**
@@ -19,6 +21,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[ORM\Table(name: "utilisateur")]
 #[ORM\Entity]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[Vich\Uploadable]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -46,7 +49,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(min: 8, max: 8)]
     private int $telephone;
 
-    #[ORM\Column(type: "string", length: 30, nullable: false)]
+    #[ORM\Column(type: "string", length: 50, nullable: false)]
     #[Assert\NotBlank(message: "L'email ne doit pas être vide")]
     #[Assert\Regex(pattern: "/.*@.*$/", message: "L adresse email doit contenir le symbole @")]
     private string $email;
@@ -60,6 +63,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: "boolean")]
     private bool $isVerified = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $img = null;
+
+    #[Vich\UploadableField(mapping: 'item_image', fileNameProperty: 'img')]
+    private ?File $imgFile = null;
 
 
     public function getId(): ?int
@@ -204,7 +213,29 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
             
             $this->telephone
         );
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(?string $img): self
+    {
+        $this->img = $img;
+
+        return $this;
     } 
+    public function setImgFile(?File $imgFile = null): void
+    {
+        $this->imgFile = $imgFile;
+
+    }
+
+    public function getImgFile(): ?File
+    {
+        return $this->imgFile;
+    }
 
 
 }

@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
+// use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
@@ -19,6 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use App\Type\Enum\UserRoleEnum;
 use App\Type\UserRoleEnumType;
+
 
 class RegistrationController extends AbstractController
 {
@@ -46,16 +48,29 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-    
-            $user->setIsVerified(true);
-    
-            // // Set the roles based on the selected checkboxes
-            // $roles = $form->get('roles')->getData();
-            // $user->setRoles($roles);
-    
+
+            $imageFile = $form->get('img')->getData();
+
+            if ($imageFile) {
+                // Set the image name as the current timestamp and the original file extension
+                $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
+
+                // Move the file to the configured directory using VichUploader
+                $imageFile->move(
+                    $this->getParameter('user_images_directory'),
+                    $imageName
+                );
+
+                // Update the item entity with the new image filename
+
+                $user->setImg($imageName);
+            }
+         
+            $user->setIsVerified(false);
+        
             $entityManager->persist($user);
             $entityManager->flush();
-    
+        
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
@@ -64,19 +79,20 @@ class RegistrationController extends AbstractController
                     ->subject('Please Confirm your Email')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
            );
-            // do anything else you need here, like send an email
-    
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+        
+           // Authenticate the user and redirect to the homepage
+           return $userAuthenticator->authenticateUser(
+               $user,
+               $authenticator,
+               $request
+           );
         }
-    
+        
+        // Render the registration form
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
-    }
+    }        
 
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
@@ -89,12 +105,12 @@ class RegistrationController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('app_home');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
 
-        return $this->redirectToRoute('app_register');
+        return $this->redirectToRoute('app_home');
     }
 }

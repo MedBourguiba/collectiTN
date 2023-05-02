@@ -8,13 +8,16 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Category;
 use App\Entity\Item;
 use App\Entity\Bids;
-
+use App\Entity\utilisateur;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ItemRepository;
 use App\Repository\BidsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CategoryRepository;
 use MercurySeries\FlashyBundle\FlashyNotifier;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Form\EditProfileType;
 
 #[Route('/client')]
 class FrontController extends AbstractController
@@ -90,6 +93,64 @@ class FrontController extends AbstractController
             'lastBids' => $lastBids,
         ]);
     }   
+    
+
+    #[Route('/profile', name: 'profile_edit')]
+public function editProfile(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+{
+    $user = $this->getUser();
+    $form = $this->createForm(EditProfileType::class, $user);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $newPassword = $form->get('newPassword')->getData();
+        $currentPassword = $form->get('currentPassword')->getData();
+
+        // Authenticate the user with the current password
+        $isPasswordValid = $passwordEncoder->isPasswordValid($user, $currentPassword);
+
+        if (!$isPasswordValid) {
+            $form->addError(new FormError('Invalid current password.'));
+            return $this->render('edit_profile.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
+        $imageFile = $form->get('img')->getData();
+
+        if ($imageFile) {
+            // Set the image name as the current timestamp and the original file extension
+            $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
+
+            // Move the file to the configured directory using VichUploader
+            $imageFile->move(
+                $this->getParameter('user_images_directory'),
+                $imageName
+            );
+
+            // Update the item entity with the new image filename
+
+            $user->setImg($imageName);
+        }
+
+        // Update the user entity with the new password
+        if ($newPassword) {
+            $encodedPassword = $passwordEncoder->encodePassword($user, $newPassword);
+            $user->setPassword($encodedPassword);
+        }
+
+        $this->getDoctrine()->getManager()->flush();
+
+        $this->addFlash('success', 'Profile updated successfully.');
+        return $this->redirectToRoute('profile_index');
+    }
+
+    return $this->render('utilisateur/profile.html.twig', [
+        'form' => $form->createView(),
+        'user' => $user,
+    ]);
+}
+
+
     // public function search(Request $request, ItemRepository $itemRepository)
     // {
     //     $searchTerm = $request->query->get('q');

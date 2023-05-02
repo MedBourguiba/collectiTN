@@ -21,9 +21,9 @@ final class Version20230423000425 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
       
-        $this->addSql('ALTER TABLE item ADD winner_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE item ADD CONSTRAINT FK_1F1B251E5DFCD4B8 FOREIGN KEY (winner_id) REFERENCES utilisateur (id)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_1F1B251E5DFCD4B8 ON item (winner_id)');
+        // $this->addSql('ALTER TABLE item ADD winner_id INT DEFAULT NULL');
+        // $this->addSql('ALTER TABLE item ADD CONSTRAINT FK_1F1B251E5DFCD4B8 FOREIGN KEY (winner_id) REFERENCES utilisateur (id)');
+        // $this->addSql('CREATE UNIQUE INDEX UNIQ_1F1B251E5DFCD4B8 ON item (winner_id)');
      
     }
 
@@ -31,8 +31,8 @@ final class Version20230423000425 extends AbstractMigration
     {
     
       
-        $this->addSql('ALTER TABLE item DROP FOREIGN KEY FK_1F1B251E5DFCD4B8');
-        $this->addSql('DROP INDEX UNIQ_1F1B251E5DFCD4B8 ON item');
+        // $this->addSql('ALTER TABLE item DROP FOREIGN KEY FK_1F1B251E5DFCD4B8');
+        // $this->addSql('DROP INDEX UNIQ_1F1B251E5DFCD4B8 ON item');
        
     }
 }

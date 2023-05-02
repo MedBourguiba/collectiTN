@@ -1,101 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
- {% block head %}
-    <head>
-        <meta charset="UTF-8">
+<html lang="fr">
+  <head>
+   {% block head %}
+    
+       <meta charset="UTF-8">
         <title>{% block title %}Collecti{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
         <link href="images/logoo.png" rel="shortcut icon">
-    </head>
+    
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-  {% block stylesheets %}
-   <link href="{{ asset('front/plugins/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
-   <link href="{{ asset ('front/plugins/bootstrap/bootstrap-slider.css')}}" rel="stylesheet">
-   <link href="{{ asset ('front/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
-   <link href="{{ asset ('front/plugins/slick/slick.css')}}" rel="stylesheet">
-   <link href="{{asset ('front/plugins/slick/slick-theme.css')}}" rel="stylesheet">
-   <link href="{{asset ('front/plugins/jquery-nice-select/css/nice-select.css')}}" rel="stylesheet">
+    {% block stylesheets %}
+      <link href="{{ asset('front/plugins/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+      <link href="{{ asset ('front/plugins/bootstrap/bootstrap-slider.css')}}" rel="stylesheet">
+      <link href="{{ asset ('front/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+      <link href="{{ asset ('front/plugins/slick/slick.css')}}" rel="stylesheet">
+      <link href="{{asset ('front/plugins/slick/slick-theme.css')}}" rel="stylesheet">
+      <link href="{{asset ('front/plugins/jquery-nice-select/css/nice-select.css')}}" rel="stylesheet">
   
-   <link href="{{asset ('front/css/style.css')}}" rel="stylesheet"> 
-   <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
-  {% endblock %}
+      <link href="{{asset ('front/css/style.css')}}" rel="stylesheet"> 
+      <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    {% endblock %}
 
-  {% block javascripts %}
-    <script src="{{asset ('front/plugins/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset ('front/plugins/bootstrap/popper.min.js')}}"></script>
-    <script src="{{asset ('front/plugins/bootstrap/bootstrap.min.js')}}"></script>
-    <script src="{{asset ('front/plugins/bootstrap/bootstrap.min.js')}}"></script>
-    <script src="{{asset ('front/plugins/tether/js/tether.min.js')}}"></script>
-    <script src="{{asset ('front/plugins/raty/jquery.raty-fa.js')}}"></script>
-    <script src="{{asset ('front/plugins/slick/slick.min.js')}}"></script>
-    <script src="{{ asset ('front/plugins/jquery-nice-select/js/jquery.nice-select.min.js')}}"></script>
-     <script src="//code.jquery.com/jquery.js"></script>
-     <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
-<!-- google map -->
-    <script src="{{asset ('front/js/script.js')}}"></script>
-  {% endblock %}
-{% endblock %}
-  <body>
-  {% block header %}
-  <header>
-	 <div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<nav class="navbar navbar-expand-lg navbar-light navigation">
-					<a class="navbar-brand" href="index.html">
-						<img src="{{asset('images/logoo.png')}}" alt="Collecti">
-					</a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav ml-auto main-nav ">
-							<li class="nav-item  ">
-								<a class="nav-link" href="{{path('app_home')}}">Home</a>
-							</li>
-								<li class="nav-item ">
-								<a class="nav-link" href="{{path('list_client')}}">Les Ventes</a>
-							</li>
+    {% block javascripts %}
+        <script src="{{asset ('front/plugins/jquery/jquery.min.js')}}"></script>
+        <script src="{{asset ('front/plugins/bootstrap/popper.min.js')}}"></script>
+        <script src="{{asset ('front/plugins/bootstrap/bootstrap.min.js')}}"></script>
+          <script src="{{asset ('front/plugins/bootstrap/bootstrap.min.js')}}"></script>
+         <script src="{{asset ('front/plugins/tether/js/tether.min.js')}}"></script>
+        <script src="{{asset ('front/plugins/raty/jquery.raty-fa.js')}}"></script>
+       <script src="{{asset ('front/plugins/slick/slick.min.js')}}"></script>
+        <script src="{{ asset ('front/plugins/jquery-nice-select/js/jquery.nice-select.min.js')}}"></script>
+        <script src="//code.jquery.com/jquery.js"></script>
+          <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
 
-							<li class="nav-item ">
-								<a class="nav-link" href="index.html">Profile</a>
-							</li>
-              	<li class="nav-item ">
-								<a class="nav-link" href="{{path('app_reclamation_new')}}">Reclamer</a>
-							</li>
-               <li class="nav-item ">
-								<a class="nav-link" href="index.html">Musée</a>
-							</li>
-						</ul>
-						<ul class="navbar-nav ml-auto mt-10">
-							<li class="nav-item">
-								<a class="nav-link text-white add-button" href="{{path('won_items')}}"><i class="fa fa-plus-circle"></i> Ma collection</a>
-							</li>
-              <li class="nav-item">
-								<a class="nav-link login-button" href="{{path('app_logout')}}">Déconnecter</a>
-							</li>
-						</ul>
-					</div>
-				</nav>
-			</div>
-		</div>
-	  </div>
+        <script src="{{asset ('front/js/script.js')}}"></script>
+    {% endblock %}
+    {% endblock %}
+ </head>
+ <body >
+  
+   <header>
+    <div class="container">
+      <div class="row">
+      
+        <div class="col-md-12">
+          <nav class="navbar navbar-expand-lg navbar-light navigation">
+            <a class="navbar-brand" href="{{path('app_home')}}">
+              <img src="{{asset('images/header.png')}}" alt="Collecti">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto main-nav ">
+                <li class="nav-item  ">
+                  <a class="nav-link" href="{{path('app_home')}}">Home</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="{{path('list_client')}}">Les Ventes</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="{{path('app_reclamation_new')}}">Reclamer</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="index.html">Musée</a>
+                </li>
+              </ul>
+              <ul class="navbar-nav ml-auto mt-10">
+                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                       <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                               <img src="{{ asset('uploads/user_images/'~app.user.img) }}" class="img rounded-circle"
+                                  width="60" height="60" alt="User Image">
+                            </a>
+                           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                             <a class="nav-link" href="{{path('profile_edit')}}">Profile</a>
+                             <a class="" href="{{path('won_items')}}"><i class="fa fa-plus-circle"></i> Ma collection</a>
+                             <a class="" href="{{ path('app_logout') }}">Déconnecter</a>
+                           </div>
+                        </div>
+               
+                     {% else %}
+                        <a class="nav-link login-button" href="{{ path('app_login') }}">Se connecter</a>
+                    
+                 {% endif %}
+              </ul>
+            </div>
+          </nav>
+        </div>
+      
+     </div>
+    </div>
 
-</head>
-{% endblock %}
+   </header>
+  
  
- {% block body %}
-     
- {% endblock %}
+  {% block body %}
+   
+  {% endblock %}
 
  
         
 
-{% block footer %}
- <footer class="footer section section-sm">
-  <!-- Container Start -->
-  <div class="">
+  {% block footer %}
+   <footer class="footer section section-sm">
+ 
+    <div class="">
     <div class="row">
       <div class="col-lg-3 col-md-7 offset-md-1 offset-lg-0 mb-4 mb-lg-0">
         <!-- About -->
@@ -155,10 +166,10 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
   <!-- Container End -->
-</footer> 
- {% endblock %}
+  </footer> 
+  {% endblock %}
     
-</body>
+ </body>
 </html>

@@ -1,0 +1,82 @@
+{% extends 'frontClient.html.twig' %}
+
+{% block body %}
+<section class="user-profile section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="sidebar">
+					<!-- User Widget -->
+					<div class="widget user">
+						<!-- User Image -->
+                        {% set img_path = 'uploads/user_images/' ~ user.getimg %}
+						<div class="image d-flex justify-content-center">
+							<img src="{{ asset(img_path) }}" alt="" class="">
+						</div>
+						<!-- User Name -->
+						<h5 class="text-center">{{user.getnom}}</h5>
+					</div>
+					<!-- Dashboard Links -->
+          <div class="widget user-dashboard-menu">
+            <ul>
+              <li><a href="index.html">Savings Dashboard</a></li>
+              <li><a href="index.html">Saved Offer <span>(5)</span></a></li>
+              <li><a href="index.html">Favourite Stores <span>(3)</span></a></li>
+              <li><a href="index.html">Recommended</a></li>
+            </ul>
+          </div>
+				</div>
+			</div>
+			<div class="col-lg-8">
+			
+                          <div class="widget welcome-message">       
+                               <h3 class="widget-header user">Edit Personal Information</h3>
+                                {{ form_start(form, {'attr': {'class': 'form-horizantal'}}) }}
+                                    <div class="form-group">
+                                         {{ form_label(form.nom, 'First Name', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                                          <div class="col-sm-9">
+                                                {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                                           </div>
+                                    </div>
+                                      <div class="form-group">
+                                         {{ form_label(form.prenom, 'Last Name', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                                             <div class="col-sm-9">
+                                               {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                                              </div>
+                                      </div>
+                                      <div class="form-group choose-file d-inline-flex">
+                                        <i class="fa fa-user text-center px-3"></i>
+                                          {{ form_widget(form.img, {'attr': {'class': 'form-control-file mt-2 pt-1', 'id': 'input-file'}}) }}
+                                      </div>
+                                    <div class="form-group">
+                                         {{ form_label(form.telephone, 'Phone Number', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                                             <div class="col-sm-9">
+                                             {{ form_widget(form.telephone, {'attr': {'class': 'form-control'}}) }}
+                                             </div>
+                                    </div>
+                                    <div class="form-group">
+                                           {{ form_label(form.email, 'Email', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                                             <div class="col-sm-9">
+                                               {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                             </div>
+                                    </div>
+                                    <div class="form-group">
+                                          {{ form_label(form.newPassword, 'New Password', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                                           <div class="col-sm-9">
+                                              {{ form_widget(form.newPassword, {'attr': {'class': 'form-control'}}) }}
+                                            </div>
+                                    </div>       
+                                     <div class="form-group">
+                                            {{ form_label(form.currentPassword, 'Current Password', {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+                                            <div class="col-sm-9">
+                                                 {{ form_widget(form.currentPassword, {'attr': {'class': 'form-control'}}) }}
+                                            </div>
+                                     </div>
+                                    <button type="submit" class="btn btn-transparent">Save Changes</button>
+                                {{ form_end(form) }}
+			                
+		                 </div>
+	            
+            </div>
+</section>
+{% endblock %}

@@ -1,21 +1,60 @@
 {% extends 'frontClient.html.twig' %}
 
-{% block title %}Register{% endblock %}
+
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+   <section class="login py-5 border-top-1">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8 align-item-center">
+                <div class="border border">
+                    <h3 class="bg-gray p-4">{% block title %}Register Now{% endblock %}</h3>
+                    {{ form_start(registrationForm) }}
+                        <fieldset class="p-4">
+                            {{ form_row(registrationForm.email, {
+                                'attr': {'class': 'form-control'},
+                                'label': 'Email*'
+                            }) }}
+                               {{ form_row(registrationForm.nom, {
+                                'attr': {'class': 'form-control mb-3'},
+                                'label': 'Nom*'
+                            }) }}
+                                  {{ form_row(registrationForm.prenom, {
+                                'attr': {'class': 'form-control mb-3'},
+                                'label': 'Prenom*'
+                            }) }}
+                            {{ form_row(registrationForm.password, {
+                                'attr': {'class': 'form-control mb-3'},
+                                'label': 'Password*'
+                            }) }}
+                              {{ form_row(registrationForm.telephone, {
+                                'attr': {'class': 'form-control mb-3'},
+                                'label': 'Numéro Telephone*'
+                            }) }}
+                                 {{ form_row(registrationForm.datenaiss, {
+                                'attr': {'class': 'form-control mb-3'},
+                                'label': 'Date de Naissance*'
+                            }) }}
+                            
+                            <div class="loggedin-forgot d-inline-flex my-3">
+                                {{ form_row(registrationForm.agreeTerms, {
+                                    'id': 'registering',
+                                    'label_attr': {'class': 'px-2'},
+                                    'label': 'By registering, you accept our Terms & Conditions'
+                                }) }}
+                            </div>
+                            <button type="submit" class="btn btn-primary font-weight-bold mt-3">{% block button_label %}Register Now{% endblock %}</button>
+                        
+                    {{ form_end(registrationForm) }}
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.password   , {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
 {% endblock %}

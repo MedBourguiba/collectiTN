@@ -1,12 +1,24 @@
 {% extends 'frontClient.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}Réinitialser Votre Mot de passe{% endblock %}
 
 {% block body %}
-    <h1>Reset your password</h1>
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+ <section class="login py-5 border-top-1">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-8 align-item-center">
+        <div class="border">
+          <h3 class="bg-gray p-4">Réinitialiser votre mot de passe</h3>
+          <fieldset class="p-4">
+            {{ form_start(resetForm) }}
+              {{ form_row(resetForm.plainPassword) }}
+              <button type="submit" class="btn btn-primary font-weight-bold mt-3">Réintialiser </button>
+           {{ form_end(resetForm) }}
+         </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
