@@ -20,7 +20,9 @@ class CategorieMusee
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Musee::class, orphanRemoval: true)]
     private Collection $musees;
-
+    public function __toString() {
+        return $this->name;
+      }
     public function __construct()
     {
         $this->musees = new ArrayCollection();

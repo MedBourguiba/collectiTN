@@ -28,7 +28,9 @@ class PieceMusee
     #[ORM\ManyToOne(inversedBy: 'piecesMusees')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Musee $musee = null;
-
+    public function __toString() {
+        return $this->name;
+      }
     public function getId(): ?int
     {
         return $this->id;

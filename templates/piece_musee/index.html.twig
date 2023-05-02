@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PieceMusee index{% endblock %}
+
+{% block body %}
+    <h1>PieceMusee index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Img</th>
+                <th>PostedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for piece_musee in piece_musees %}
+            <tr>
+                <td>{{ piece_musee.id }}</td>
+                <td>{{ piece_musee.name }}</td>
+                <td>{{ piece_musee.description }}</td>
+                <td>{{ piece_musee.img }}</td>
+                <td>{{ piece_musee.postedAt ? piece_musee.postedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_piece_musee_show', {'id': piece_musee.id}) }}">show</a>
+                    <a href="{{ path('app_piece_musee_edit', {'id': piece_musee.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_piece_musee_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PieceMusee{% endblock %}
+
+{% block body %}
+    <h1>Create new PieceMusee</h1>
+
+    {{ include('piece_musee/_form.html.twig') }}
+
+    <a href="{{ path('app_piece_musee_index') }}">back to list</a>
+{% endblock %}

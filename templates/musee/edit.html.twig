@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Musee{% endblock %}
+
+{% block body %}
+    <h1>Edit Musee</h1>
+
+    {{ include('musee/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_musee_index') }}">back to list</a>
+
+    {{ include('musee/_delete_form.html.twig') }}
+{% endblock %}
