@@ -1,4 +1,37 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+<table>
+	<tr class="form-group">
+		<td>
+			{{ form_label(form.name,"Name") }}</td>
+		<td>
+			{{ form_widget(form.name,{'attr':{'class':'form-control'}}) }}</td>
+
+	</tr>
+	<tr class="form-group">
+		<td>
+			{{ form_label(form.description,"description") }}</td>
+		<td>
+			{{ form_widget(form.description,{'attr':{'class':'form-control'}}) }}</td>
+
+	</tr>
+	<tr class="form-group">
+		<td>
+			{{ form_label(form.img,"img") }}</td>
+		<td>
+			{{ form_widget(form.img,{'attr':{'class':'form-control-file'},'type':'file'}) }}</td>
+
+	</tr>
+	<tr class="form-group">
+		<td>
+			{{ form_label(form.categorie,"categorie") }}</td>
+		<td>
+			{{ form_widget(form.categorie,{'attr':{'class':'form-control'}}) }}</td>
+
+	</tr>
+	<tr class="form-group">
+		<td colspan="2">
+			<button class="btn btn-primary btn-lg btn-block">{{ button_label|default('Save') }}</button>
+		</td>
+	</tr>
+</table>
 {{ form_end(form) }}

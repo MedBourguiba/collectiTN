@@ -1,0 +1,38 @@
+{% extends 'frontClient.html.twig' %}
+{% block title %}Musee
+{% endblock %}
+{% block body %}
+
+
+	<div class="container">
+		<h1>Musee</h1>
+		<div class="form-outline"><form action="{{ path('app_musee_index_client')}}" method="post">
+			<div class="row">
+            
+				<input type="search" id="form1" class="form-control col-10" placeholder="Type query" aria-label="Search" name="search"/>
+				<button class="col-2 btn btn-warning" type="submit">Search</button>
+            
+				</div></form>
+			</div>
+			<hr>
+			{% for musee in musees %}
+				{% set img_path = 'uploads/musee_images/' ~ musee.getimg %}
+
+				<div class="card" style="width: 18rem;">
+					<img src="{{ asset(img_path) }}"/>
+					<div class="card-body">
+						<h5 class="card-title">{{ musee.name }}</h5>
+						<p class="card-text">{{ musee.description }}</p>
+					</a>
+				</p>
+				<a href="{{ path('app_musee_show_client', {'id': musee.id}) }}">Show Details</a>
+			</div>
+		</div>
+
+
+	{% else %}
+		<tr>
+			<td colspan="6">no Musee found</td>
+		</tr>
+	{% endfor %}
+	<hr/></div>{% endblock %}

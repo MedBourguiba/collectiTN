@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Musee;
 use App\Form\MuseeType;
 use App\Repository\MuseeRepository;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,11 +25,30 @@ class MuseeController extends AbstractController
     #[Route('/new', name: 'app_musee_new', methods: ['GET', 'POST'])]
     public function new(Request $request, MuseeRepository $museeRepository): Response
     {
+        
         $musee = new Musee();
         $form = $this->createForm(MuseeType::class, $musee);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $imageFile = $form->get('img')->getData();
+
+            if ($imageFile) {
+                // Set the image name as the current timestamp and the original file extension
+                $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
+
+                // Move the file to the configured directory using VichUploader
+                $imageFile->move(
+                    $this->getParameter('musee_images_directory'),
+                    $imageName
+                );
+
+                // Update the item entity with the new image filename
+
+                $musee->setImg($imageName);
+            }
+            $musee->setCreatedAt(new DateTimeImmutable("now"));
             $museeRepository->save($musee, true);
 
             return $this->redirectToRoute('app_musee_index', [], Response::HTTP_SEE_OTHER);

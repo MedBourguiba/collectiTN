@@ -6,6 +6,11 @@ use App\Entity\Musee;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
 
 class MuseeType extends AbstractType
 {
@@ -13,11 +18,15 @@ class MuseeType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description')
-            ->add('img')
-            ->add('createdAt')
-            ->add('categorie')
-        ;
+            ->add('description',TextareaType::class)
+            ->add('img', FileType::class, [
+                'data_class' => null,
+                'constraints' => [
+            new NotBlank(),
+    
+        ],
+      ])
+            ->add('categorie');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

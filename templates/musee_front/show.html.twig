@@ -1,0 +1,30 @@
+
+{% extends 'frontClient.html.twig' %}
+{% block title %}Show Musee{% endblock %}
+
+{% block body %}
+    <h1>Musee</h1>
+
+    {% for piece in musee.getPiecesMusees %}
+				{% set img_path = 'uploads/piece_musee_images/' ~ piece.getimg %}
+
+				<div class="card" style="width: 18rem;">
+					<img src="{{ asset(img_path) }}"/>
+					<div class="card-body">
+						<h5 class="card-title">{{ piece.name }}</h5>
+						<p class="card-text">{{ piece.description }}</p>
+					</a>
+				</p>
+				<a href="{{ path('app_musee_show_client', {'id': musee.id}) }}">Show Details</a>
+			</div>
+		</div>
+
+
+	{% else %}
+		<tr>
+			<td colspan="6">no records found</td>
+		</tr>
+	{% endfor %}
+
+    <a href="{{ path('app_musee_index_client') }}">back to list</a>
+{% endblock %}

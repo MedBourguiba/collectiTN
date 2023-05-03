@@ -6,6 +6,8 @@
 parameters:
     item_images_directory: '%kernel.project_dir%/public/uploads/item_images'
     user_images_directory: '%kernel.project_dir%/public/uploads/user_images'
+    musee_images_directory: '%kernel.project_dir%/public/uploads/musee_images'
+    Piece_musee_images_directory: '%kernel.project_dir%/public/uploads/pieces_musee_images'
 
 services:
     # default configuration for services in *this* file
@@ -20,6 +22,12 @@ services:
     App\Form\RegistrationFormType:
         arguments:
             $directory: '%kernel.project_dir%/public/uploads/user_images'
+    App\Form\MuseeType:
+        arguments:
+            $directory: '%kernel.project_dir%/public/uploads/musee_images'
+    App\Form\PieceMuseeType:
+        arguments:
+            $directory: '%kernel.project_dir%/public/uploads/pieces_musee_images'
     App\Controller\SecurityController:
         arguments:
             $session: '@session'

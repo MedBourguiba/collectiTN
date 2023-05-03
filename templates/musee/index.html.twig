@@ -1,14 +1,14 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}Musee index{% endblock %}
-
+{% extends 'backAdmin.html.twig' %}
+{% block title %}Musee{% endblock %}
 {% block body %}
-    <h1>Musee index</h1>
-
+    <h1>Musee </h1>
+    
     <table class="table">
         <thead>
+    
+
             <tr>
-                <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Img</th>
@@ -19,7 +19,6 @@
         <tbody>
         {% for musee in musees %}
             <tr>
-                <td>{{ musee.id }}</td>
                 <td>{{ musee.name }}</td>
                 <td>{{ musee.description }}</td>
                 <td>{{ musee.img }}</td>
@@ -37,5 +36,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_musee_new') }}">Create new</a>
+    <a href="{{ path('app_musee_new') }}"class="btn btn-primary">Create new</a>
 {% endblock %}

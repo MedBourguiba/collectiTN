@@ -6,6 +6,9 @@ use App\Entity\PieceMusee;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PieceMuseeType extends AbstractType
 {
@@ -14,10 +17,14 @@ class PieceMuseeType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('img')
-            ->add('postedAt')
-            ->add('musee')
-        ;
+            ->add('img', FileType::class, [
+                'data_class' => null,
+                'constraints' => [
+            new NotBlank(),
+    
+        ],
+      ])
+            ->add('musee');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\PieceMusee;
 use App\Form\PieceMuseeType;
 use App\Repository\PieceMuseeRepository;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,23 @@ class PieceMuseeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('img')->getData();
+
+            if ($imageFile) {
+                // Set the image name as the current timestamp and the original file extension
+                $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
+
+                // Move the file to the configured directory using VichUploader
+                $imageFile->move(
+                    $this->getParameter('Piece_musee_images_directory'),
+                    $imageName
+                );
+
+                // Update the item entity with the new image filename
+
+                $pieceMusee->setImg($imageName);
+            }
+            $pieceMusee->setPostedAt(new DateTimeImmutable("now"));
             $pieceMuseeRepository->save($pieceMusee, true);
 
             return $this->redirectToRoute('app_piece_musee_index', [], Response::HTTP_SEE_OTHER);
