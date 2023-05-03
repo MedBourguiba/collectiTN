@@ -4,60 +4,196 @@
 
 {% block body %}
 
-<div class="advance-search nice-select-white">
-					<form>
-						<div class="form-row align-items-center">
-						   <form class="form-inline my-2 my-lg-0" action="{{ path('app_utilisateur_index') }}" method="get">
-                               <input class="form-control mr-sm-2" t                            ype="text" placeholder="Search" name="q">
-                               <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                           </form>
+           
+    <div class="content-wrap">
+    
+        <div class="main">
+            <div class="container-fluid">
+            
+                <section id="main-content">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-money color-success border-success"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">Total Enchères</div>
+                                        <div class="stat-digit">1,012</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-user color-primary border-primary"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">Clients</div>
+                                        <div class="stat-digit"> {% set client_users = utilisateurs|filter(u => 'ROLE_CLIENT' in u.roles) %}
+                                             {{ client_users|length }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-layout-grid2 color-pink border-pink"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">Ventes Actives</div>
+                                        <div class="stat-digit">770</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-link color-danger border-danger"></i></div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">Partenaires</div>
+                                        <div class="stat-digit"> {% set client_users = utilisateurs|filter(u => 'ROLE_PARTNER' in u.roles) %}
+                                             {{ client_users|length }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="row">
+                     
+                        <!-- /# column -->
+                       <div class="col-lg-8">
+                                <div class="advance-search nice-select-white">
+                                <form>
+                                    <div class="form-row align-items-center">
+                                    <form class="form-inline my-2 my-lg-0" action="{{ path('app_utilisateur_index') }}" method="get">
+                                        <input class="form-control mr-sm-2" t                            ype="text" placeholder="Search" name="q">
+                                        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                                    </form>
 
-						</div>
-					</form>
-				</div>
+                                    </div>
+                                </form>
+                               </div>   
+                              <div class="card">
+                                     <div class="card-title pr">
+                                          <h4>Nos Partenaires</h4>
+                                    </div>
+                                 <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table student-data-table m-t-20">
+                                                 <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Nom</th>
+                                                            <th>Prenom</th>
+                                                            <th>email</th>
+                                                        
+                                                          
+                                                      </tr>
+                                                    </thead>
+                                                <tbody>
+                                                    
+                                                    {% for utilisateur in utilisateurs %}
+                                                     {% set img_path = 'uploads/user_images/' ~ utilisateur.getimg %}
+                                                      {% if 'ROLE_PARTNER' in utilisateur.roles %}
+                                                         <tr>
+                                                           <td> <img class="testimonial-author-img" width="50" height="50" src="{{ asset(img_path) }}" alt="aaa" /></td>
+                                                            <td>{{ utilisateur.nom }}</td>
+                                                            <td>{{ utilisateur.prenom }}</td>
+                                                           <td>{{ utilisateur.email }}</td>
+                                                         
 
-    <h1>Utilisateur index</h1>
+                                                         </tr>
+                                                        {% endif %}
+                                                        {% else %}
+                                                         <tr>
+                                                             <td colspan="6">no records found</td>
+                                                         </tr>
+                                                    {% endfor %}
+                                              </tbody>
+                                            </table>
+                                             {{knp_pagination_render(utilisateurs)}}
+
+                                    </div>
+                                 </div>
+                              </div>
+                       </div>
+                        <!-- /# column -->
+                    </div>
+                    <!-- /# row -->
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="card p-0">
+                                <div class="stat-widget-three home-widget-three">
+                                    <div class="stat-icon bg-facebook">
+                                        <i class="ti-facebook"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-digit">8,268</div>
+                                        <div class="stat-text">Likes</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card p-0">
+                                <div class="stat-widget-three home-widget-three">
+                                    <div class="stat-icon bg-youtube">
+                                        <i class="ti-youtube"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-digit">12,545</div>
+                                        <div class="stat-text">Subscribes</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card p-0">
+                                <div class="stat-widget-three home-widget-three">
+                                    <div class="stat-icon bg-twitter">
+                                        <i class="ti-twitter"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-digit">7,982</div>
+                                        <div class="stat-text">Tweets</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="card p-0">
+                                <div class="stat-widget-three home-widget-three">
+                                    <div class="stat-icon bg-danger">
+                                        <i class="ti-linkedin"></i>
+                                    </div>
+                                    <div class="stat-content">
+                                        <div class="stat-digit">9,658</div>
+                                        <div class="stat-text">Followers</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+             
+                    <!-- /# row -->
+
+                   
 
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>nom</th>
-
-
-                <th>prénom</th>
-
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for utilisateur in utilisateurs %}
-            <tr>
-                <td>{{ utilisateur.id }}</td>
-                <td>{{ utilisateur.nom }}</td>
-
-                <td>{{ utilisateur.prenom }}</td>
-
-                <td>{{ utilisateur.email }}</td>
-                <td>{{ utilisateur.roles|join(', ') }}</td>
-                <td>{{ utilisateur.password }}</td>
-                <td>
-                    <a href="{{ path('app_utilisateur_show', {'id': utilisateur.id}) }}">show</a>
-                    <a href="{{ path('app_utilisateur_edit', {'id': utilisateur.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {{knp_pagination_render(utilisateurs)}}
-
-    <a href="{{ path('app_utilisateur_new') }}">Create new</a>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="footer">
+                                <p>2018 © Admin Board. - <a href="#">example.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
 {% endblock %}

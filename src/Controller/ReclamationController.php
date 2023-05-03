@@ -13,10 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
-{
+{ 
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
 public function index(ReclamationRepository $reclamationRepository): Response
 {
@@ -26,12 +27,12 @@ public function index(ReclamationRepository $reclamationRepository): Response
 }
 
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReclamationRepository $reclamationRepository): Response
+    public function new(Request $request, ReclamationRepository $reclamationRepository,UserInterface $user): Response
     {
         $reclamation = new Reclamation();
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
-        
+        $reclamation->setUser($user);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $reclamationRepository->save($reclamation, true);
