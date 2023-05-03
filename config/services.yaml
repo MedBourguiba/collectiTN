@@ -19,7 +19,7 @@ services:
     App\Form\ItemType:
         arguments:
             $directory: '%kernel.project_dir%/public/uploads/item_images'
-    App\Form\RegistrationFormType:
+    App\Form\RegistrationType:
         arguments:
             $directory: '%kernel.project_dir%/public/uploads/user_images'
     App\Form\MuseeType:

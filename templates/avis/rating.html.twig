@@ -1,0 +1,118 @@
+{% extends "frontClient.html.twig" %}
+{% block title %}Avis{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link data-require="fontawesome@*" data-semver="4.5.0" rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.css"/>
+    <style>
+        .rating {
+            cursor: pointer;
+        }
+
+        .rating .rating-star {
+            display: inline-block;
+            position: relative;
+            padding-right: 5px;
+            margin-left: -5px;
+            color: #e3cf7a;
+        }
+
+        .rating .selected:before {
+            content: '\f005';
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+
+            function setRating(rating) {
+                $('#form_rating').val(rating);
+                // fill all the stars assigning the '.selected' class
+                $('.rating-star').removeClass('fa-star-o').addClass('selected');
+                // empty all the stars to the right of the mouse
+                $('.rating-star#rating-' + rating + ' ~ .rating-star').removeClass('selected').addClass('fa-star-o');
+            }
+
+            $('.rating-star')
+                .on('mouseover', function (e) {
+                    var rating = $(e.target).data('rating');
+                    // fill all the stars
+                    $('.rating-star').removeClass('fa-star-o').addClass('fa-star');
+                    // empty all the stars to the right of the mouse
+                    $('.rating-star#rating-' + rating + ' ~ .rating-star').removeClass('fa-star').addClass('fa-star-o');
+                })
+                .on('mouseleave', function (e) {
+                    // empty all the stars except those with class .selected
+                    $('.rating-star').removeClass('fa-star').addClass('fa-star-o');
+                })
+                .on('click', function (e) {
+                    var rating = $(e.target).data('rating');
+                    setRating(rating);
+                })
+                .on('keyup', function (e) {
+                    // if spacebar is pressed while selecting a star
+                    if (e.keyCode === 32) {
+                        // set rating (same as clicking on the star)
+                        var rating = $(e.target).data('rating');
+                        setRating(rating);
+                    }
+                });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+
+    <div class="mpl-box-md">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            
+        </nav>
+        <div class="row hgap-lg vgap-lg mb-0">
+            <div class="col-lg-7">
+                <div class="mpl-product-gallery">
+              
+                       data-fancybox="gallery" data-animation-effect="fade">
+<span class="mpl-image">
+
+</span>
+                       
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5" data-sr="product-main" data-sr-interval="120" data-sr-duration="1000"
+                 data-sr-distance="20">
+                <h1 class="mb-10" data-sr-item="product-main">commentaire : {{ avis.commentaire }}</h1>
+              
+                
+             
+                {{ form_start(form) }}
+                <div class="rating" role="optgroup">
+                    <!-- in Rails just use 1.upto(5) -->
+                    <i class="fa fa-star-o fa-2x rating-star" id="rating-1" data-rating="1" tabindex="0"
+                       aria-label="Rate as one out of 5 stars" role="radio"></i>
+                    <i class="fa fa-star-o fa-2x rating-star" id="rating-2" data-rating="2" tabindex="0"
+                       aria-label="Rate as two out of 5 stars" role="radio"></i>
+                    <i class="fa fa-star-o fa-2x rating-star" id="rating-3" data-rating="3" tabindex="0"
+                       aria-label="Rate as three out of 5 stars" role="radio"></i>
+                    <i class="fa fa-star-o fa-2x rating-star" id="rating-4" data-rating="4" tabindex="0"
+                       aria-label="Rate as four out of 5 stars" role="radio"></i>
+                    <i class="fa fa-star-o fa-2x rating-star" id="rating-5" data-rating="5" tabindex="0"
+                       aria-label="Rate as five out of 5 stars" role="radio"></i>
+
+                </div>
+{#                <input type="number" name="rating" id="rating-input" min="1" max="5" />#}
+                {{ form_widget(form.note,{'attr':{'id':'rating-input','name':'rating'}}) }}
+                <button type="submit" class="btn btn-md btn-brand">Rate</button>
+                {{ form_end(form) }}
+            </div>
+
+        </div>
+    </div>
+
+    {% block js %}
+        {{ parent() }}
+        <script data-require="jquery@*" data-semver="2.2.0" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        {% endblock %}
+
+{% endblock %}

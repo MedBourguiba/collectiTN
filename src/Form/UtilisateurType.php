@@ -10,6 +10,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class UtilisateurType extends AbstractType
 {
@@ -26,7 +28,10 @@ class UtilisateurType extends AbstractType
                 'expanded' => true,
             ])
             ->add('telephone')
-            ->add('datenaiss')
+            ->add('img', FileType::class, [
+                'data_class' => null,
+      
+      ])
 
         ;
     }

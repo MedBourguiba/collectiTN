@@ -13,7 +13,7 @@ use App\Repository\BidsRepository;
 use App\Entity\Bids;
 use Symfony\Component\Security\Core\User\UserInterface;
 use MercurySeries\FlashyBundle\FlashyNotifier;
-
+ 
 class BidsController extends AbstractController
 {
 

@@ -39,7 +39,7 @@ class UtilisateurController extends AbstractController
             $utilisateurs = $utilisateurRepository->findAll();
         }
 
-        $utilisateurs=$paginator->paginate($utilisateurs,$request->query->getInt('page',1),2);
+        $utilisateurs=$paginator->paginate($utilisateurs,$request->query->getInt('page',1),10);
 
         return $this->render('utilisateur/index.html.twig', [
             'utilisateurs' => $utilisateurs,
@@ -47,6 +47,30 @@ class UtilisateurController extends AbstractController
         ]);
 
     }
+
+    #[Route('/clients', name: 'app_utilisateur_clients', methods: ['GET'])]
+
+    public function index2(UtilisateurRepository $utilisateurRepository,PaginatorInterface $paginator ,Request $request  ): Response
+    {   
+        $searchTerm = $request->query->get('q');
+        $utilisateurs = [];
+        if (!empty($searchTerm)) {
+            $utilisateurs = $utilisateurRepository->searchUsers($searchTerm);
+
+        }
+        else{
+            $utilisateurs = $utilisateurRepository->findAll();
+        }
+
+        $utilisateurs=$paginator->paginate($utilisateurs,$request->query->getInt('page',1),5);
+
+        return $this->render('utilisateur/index2.html.twig', [
+            'utilisateurs' => $utilisateurs,
+            'searchTerm' => $searchTerm,
+        ]);
+
+    }
+
 
     #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]

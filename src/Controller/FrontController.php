@@ -110,7 +110,7 @@ public function editProfile(Request $request, UserPasswordEncoderInterface $pass
         $isPasswordValid = $passwordEncoder->isPasswordValid($user, $currentPassword);
 
         if (!$isPasswordValid) {
-            $form->addError(new FormError('Invalid current password.'));
+            // $form->addError(new FormError('Invalid current password.'));
             return $this->render('edit_profile.html.twig', [
                 'form' => $form->createView(),
             ]);
@@ -141,7 +141,7 @@ public function editProfile(Request $request, UserPasswordEncoderInterface $pass
         $this->getDoctrine()->getManager()->flush();
 
         $this->addFlash('success', 'Profile updated successfully.');
-        return $this->redirectToRoute('profile_index');
+        return $this->redirectToRoute('profile_edit');
     }
 
     return $this->render('utilisateur/profile.html.twig', [

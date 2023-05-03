@@ -2,6 +2,7 @@
 {% extends 'backAdmin.html.twig' %}
 {% block title %}Musee{% endblock %}
 {% block body %}
+<div class="content-wrap">
     <h1>Musee </h1>
     
     <table class="table">
@@ -37,4 +38,5 @@
     </table>
 
     <a href="{{ path('app_musee_new') }}"class="btn btn-primary">Create new</a>
+    </div>
 {% endblock %}

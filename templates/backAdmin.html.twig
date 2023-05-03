@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-{% block  head %}
-<head>
+
+ <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +21,7 @@
     <!-- Standard iPhone Touch Icon-->
     <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
     <!-- Styles -->
-     {% block stylesheets %}
+  {% block stylesheets %}
    <link href={{asset ('back/css/lib/calendar2/pignose.calendar.min.css')}} rel="stylesheet">
     <link href={{asset('back/css/lib/chartist/chartist.min.css')}} rel="stylesheet">
     <link href={{asset('back/css/lib/font-awesome.min.css')}} rel="stylesheet">
@@ -47,27 +47,30 @@
     <script src={{ asset('back/js/scripts.js') }}></script>
     <!-- bootstrap -->
 
-    <script src={{ asset('js/lib/calendar-2/moment.latest.min.js') }}></script>
-    <script src={{ asset('js/lib/calendar-2/pignose.calendar.min.js') }}></script>
-    <script src={{ asset('js/lib/calendar-2/pignose.init.js') }}></script>
+    <script src={{ asset('back/js/lib/calendar-2/moment.latest.min.js') }}></script>
+    <script src={{ asset('back/js/lib/calendar-2/pignose.calendar.min.js') }}></script>
+    <script src={{ asset('back/js/lib/calendar-2/pignose.init.js') }}></script>
 
 
-    <script src={{ asset('js/lib/weather/jquery.simpleWeather.min.js') }}></script>
-    <script src={{ asset('js/lib/weather/weather-init.js') }}></script>
-    <script src={{ asset('js/lib/circle-progress/circle-progress.min.js') }}></script>
-    <script src={{ asset('js/lib/circle-progress/circle-progress-init.js') }}></script>
-    <script src={{ asset('js/lib/chartist/chartist.min.js') }}></script>
-    <script src={{ asset('js/lib/sparklinechart/jquery.sparkline.min.js') }}></script>
-    <script src={{ asset('js/lib/sparklinechart/sparkline.init.js') }}></script>
-    <script src={{ asset('js/lib/owl-carousel/owl.carousel.min.js') }}></script>
-    <script src={{ asset('js/lib/owl-carousel/owl.carousel-init.js') }}></script>
+    <script src={{ asset('back/js/lib/weather/jquery.simpleWeather.min.js') }}></script>
+    <script src={{ asset('back/js/lib/weather/weather-init.js') }}></script>
+    <script src={{ asset('back/js/lib/circle-progress/circle-progress.min.js') }}></script>
+    <script src={{ asset('back/js/lib/circle-progress/circle-progress-init.js') }}></script>
+    <script src={{ asset('back/js/lib/chartist/chartist.min.js') }}></script>
+    <script src={{ asset('back/js/lib/sparklinechart/jquery.sparkline.min.js') }}></script>
+    <script src={{ asset('back/js/lib/sparklinechart/sparkline.init.js') }}></script>
+    <script src={{ asset('back/js/lib/owl-carousel/owl.carousel.min.js') }}></script>
+    <script src={{ asset('back/js/lib/owl-carousel/owl.carousel-init.js') }}></script>
     <!-- scripit init-->
-    <script src={{ asset('js/dashboard2.js') }}></script>
-    {% endblock %}
+    <script src={{ asset('back/js/dashboard2.js') }}></script>
+  {% endblock %}
    
-</head>
+ 
+ 
+ </head>
 
-{% endblock %}
+
+
 
 <body>
 
@@ -78,31 +81,25 @@
                 <ul>
                     <div class="logo"><a href="index.html">
                             <!-- <img src="images/logo.png" alt="" /> --><span>Collecti</span></a></div>
-                    <li class="label">Application</li>
-                    <li><a class="sidebar-sub-toggle"><i class="ti-home"></i> Dashboard <span
-                                class="badge badge-primary"></span> <span
-                                class="sidebar-collapse-icon ti-angle-down"></span></a>
-                        <ul>
-                            <li><a href="index.html">Dashboard 1</a></li>
-                            <li><a href="index.html">Dashboard 2</a></li>
-                        </ul>
+                    <li class="label">Main</li>
+                    <li><a href="{{path('app_utilisateur_index')}}" class=""><i class="ti-home"></i> Dashboard <span></span> <span></span></a>
+                     
                     </li>
 
-                    <li class="label">Les Ventes</li>
-                    <li><a class="sidebar-sub-toggle"><i class="cart-plus"></i> Les Ventes aux Enchères <span
-                                class="sidebar-collapse-icon ti-angle-down"></span></a>
-                        <ul>
-                            <li><a href="invoice.html">Basic</a></li>
-                            <li><a href="invoice-editable.html">Editable</a></li>
-                        </ul>
+                    <li class="label">Apps</li>
+                      <li><a href="{{path('app_utilisateur_clients')}}"><i class="ti-user"></i> Clients</a></li>
+                    <li><a ><i class="ti-bar-chart-alt"></i> Les Ventes <span
+                                ></span></a>
+                       
                     </li>
                     <li><a class="sidebar-sub-toggle" href="{{path('app_musee_index')}}"></i>Musee</a></li>
                     <li><a class="sidebar-sub-toggle" href="{{path('app_piece_musee_index')}}"></i>PieceMusee</a></li>
                     <li><a class="sidebar-sub-toggle" href="{{path('app_categorie_musee_index')}}"></i>CategorieMusee</a></li>
-                    <li><a class="sidebar-sub-toggle" href="{{path('app_category_index')}}"></i>Categories</a></i>
-                    <li><a href="{{path('app_reclamation_index')}}"><i class=""></i> Reclamations</a></li>
-                    <li><a href="{{path('app_logout')}}"><i class="ti-close" ></i> Logout</a></li> 
-                </ul>
+                    <li><a href="{{path('app_reclamation_index')}}"><i class="ti-email"></i>Reclamations</a></li>
+                  
+                    <li><a href="{{path('app_category_index')}}"><i class="ti-layout-grid2-alt"></i>Categories</a></li>
+                    <li><a href="{{path('app_logout')}}"><i class="ti-close" ></i> Logout</a></li>
+            
             </div>
         </div>
     </div>
@@ -113,43 +110,28 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="float-left">
-                    </div>  
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="content-wrap">
-        <div class="main">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-8 p-r-0 title-margin-right">
-                        <div class="page-header">
-                            <div class="page-title">
-                            </div>
-                              <li class="nav-item">
-					<a class="nav-link login-button" href="!#">Déconnecter</a>
-				</li>
+                        <div class="hamburger sidebar-toggle">
+                            <span class="line"></span>
+                            <span class="line"></span>
+                            <span class="line"></span>
                         </div>
                     </div>
-                    <!-- /# column -->
-
-                    <!-- /# column -->
+                   
                 </div>
-                <!-- /# row -->
-                
             </div>
         </div>
     </div>
 
-    <!-- jquery vendor -->
- <div class="content-wrap">
- {% block body %}
- 
 
- {% endblock %}
-  </div>
+    
+
+    <!-- jquery vendor -->
+
+   {% block body %}
+
+
+   {% endblock %}
+</div>
 </body>
 
 </html>
