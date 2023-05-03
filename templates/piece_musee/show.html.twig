@@ -3,6 +3,7 @@
 {% block title %}PieceMusee{% endblock %}
 
 {% block body %}
+<div class="content-wrap">
     <h1>PieceMusee</h1>
 
     <table class="table">
@@ -35,4 +36,5 @@
     <a href="{{ path('app_piece_musee_edit', {'id': piece_musee.id}) }}">edit</a>
 
     {{ include('piece_musee/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

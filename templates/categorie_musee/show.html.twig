@@ -4,6 +4,7 @@
 {% block title %}CategorieMusee{% endblock %}
 
 {% block body %}
+<div class="content-wrap">
     <h1>CategorieMusee</h1>
 
     <table class="table">
@@ -24,4 +25,5 @@
     <a href="{{ path('app_categorie_musee_edit', {'id': categorie_musee.id}) }}">edit</a>
 
     {{ include('categorie_musee/_delete_form.html.twig') }}
+</div>
 {% endblock %}

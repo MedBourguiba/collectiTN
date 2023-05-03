@@ -3,9 +3,11 @@
 {% block title %}Add Musee{% endblock %}
 
 {% block body %}
+<div class="content-wrap">
     <h1>Create new Musee</h1>
 
     {{ include('musee/_form.html.twig') }}
 
     <a href="{{ path('app_musee_index') }}">back to list</a>
+    </div>
 {% endblock %}
