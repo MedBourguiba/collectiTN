@@ -3,10 +3,11 @@
 {% block title %}Show Musee{% endblock %}
 
 {% block body %}
+<div class="container">
     <h1>Musee</h1>
 
     {% for piece in musee.getPiecesMusees %}
-				{% set img_path = 'uploads/piece_musee_images/' ~ piece.getimg %}
+				{% set img_path = 'uploads/pieces_musee_images/' ~ piece.getimg %}
 
 				<div class="card" style="width: 18rem;">
 					<img src="{{ asset(img_path) }}"/>
@@ -14,8 +15,7 @@
 						<h5 class="card-title">{{ piece.name }}</h5>
 						<p class="card-text">{{ piece.description }}</p>
 					</a>
-				</p>
-				<a href="{{ path('app_musee_show_client', {'id': musee.id}) }}">Show Details</a>
+				</p>	
 			</div>
 		</div>
 
@@ -27,4 +27,5 @@
 	{% endfor %}
 
     <a href="{{ path('app_musee_index_client') }}">back to list</a>
+	<hr/></div>
 {% endblock %}
