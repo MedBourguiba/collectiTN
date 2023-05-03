@@ -1,6 +1,6 @@
 {% extends 'backAdmin.html.twig' %}
 
-{% block title %}Utilisateur index{% endblock %}
+
 
 {% block body %}
 
@@ -12,18 +12,6 @@
             
                 <section id="main-content">
                     <div class="row">
-                        <div class="col-lg-3">
-                            <div class="card">
-                                <div class="stat-widget-one">
-                                    <div class="stat-icon dib"><i class="ti-money color-success border-success"></i>
-                                    </div>
-                                    <div class="stat-content dib">
-                                        <div class="stat-text">Total Enchères</div>
-                                        <div class="stat-digit">1,012</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-lg-3">
                             <div class="card">
                                 <div class="stat-widget-one">
@@ -40,18 +28,6 @@
                         <div class="col-lg-3">
                             <div class="card">
                                 <div class="stat-widget-one">
-                                    <div class="stat-icon dib"><i class="ti-layout-grid2 color-pink border-pink"></i>
-                                    </div>
-                                    <div class="stat-content dib">
-                                        <div class="stat-text">Ventes Actives</div>
-                                        <div class="stat-digit">770</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="card">
-                                <div class="stat-widget-one">
                                     <div class="stat-icon dib"><i class="ti-link color-danger border-danger"></i></div>
                                     <div class="stat-content dib">
                                         <div class="stat-text">Partenaires</div>
@@ -61,6 +37,32 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-money color-success border-success"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">Total Enchères</div>
+                                        <div class="stat-digit">1.200dt</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-lg-3">
+                            <div class="card">
+                                <div class="stat-widget-one">
+                                    <div class="stat-icon dib"><i class="ti-layout-grid2 color-pink border-pink"></i>
+                                    </div>
+                                    <div class="stat-content dib">
+                                        <div class="stat-text">Ventes Actives</div>
+                                        <div class="stat-digit">3</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
                     </div>
                    
                     <div class="row">
@@ -84,6 +86,7 @@
                                     </div>
                                  <div class="card-body">
                                     <div class="table-responsive">
+                                     <a href="{{ path('app_utilisateur_new') }}">Create new</a>
                                         <table class="table student-data-table m-t-20">
                                                  <thead>
                                                         <tr>
@@ -119,6 +122,7 @@
                                              {{knp_pagination_render(utilisateurs)}}
 
                                     </div>
+                                 
                                  </div>
                               </div>
                        </div>
@@ -188,7 +192,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer">
-                                <p>2018 © Admin Board. - <a href="#">example.com</a></p>
+                                <p>2023 © Admin COLLECTI. - <a href="#">collecti.tn</a></p>
                             </div>
                         </div>
                     </div>

@@ -11,15 +11,15 @@
           <!-- Dashboard Links -->
           <div class="widget user-dashboard-menu">
             <ul>
-              <li ><a href="{{ path('list_itemsA') }}"><i class="fa fa-user"></i> Mes Ventes Actives
+              <li ><a href="{{ path('list_itemsA') }}"><i ></i> Mes Ventes Actives
               <span>{{ items|filter(item => item.status == 0)|length }}</span></a></li>
               <li class="active"><a href="{{ path('list_itemsE') }}">Mes Ventes Expirées
                   <span></span></a></li>
-              <li><a href="dashboard-archived-ads.html"><i class="fa fa-file-archive-o"></i>Ventes Archivées
+              <li><a href="dashboard-archived-ads.html"><i ></i>Mes Ventes gagnées
                   <span></span></a></li>
-              <li><a href="{{ path('add_item') }}"><i class="fa fa-bolt"></i> Ajouter Piéce<span></span></a>
+              <li><a href="{{ path('add_item') }}"><i ></i> Ajouter Piéce<span></span></a>
               </li>
-              <li><a href="index.html"><i class="fa fa-cog"></i> Logout</a></li>
+              <li><a href="{{path('app_logout')}}"><i class="fa fa-cog"></i> Logout</a></li>
           </div>
           
           <!-- delete-account modal -->

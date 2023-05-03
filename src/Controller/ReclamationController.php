@@ -48,6 +48,30 @@ public function index(ReclamationRepository $reclamationRepository): Response
         ]);
     }
 
+    #[Route('/new2', name: 'app_reclamation_new2', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_PARTNER')]
+    public function new2(Request $request, ReclamationRepository $reclamationRepository,UserInterface $user): Response
+    {
+        $reclamation = new Reclamation();
+        $form = $this->createForm(ReclamationType::class, $reclamation);
+        $form->handleRequest($request);
+        $reclamation->setUser($user);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reclamationRepository->save($reclamation, true);
+            $message = " a été ajouté avec succès";
+
+            return $this->redirectToRoute('app_reclamation_new', [], Response::HTTP_SEE_OTHER);
+            
+        }
+
+        return $this->renderForm('reclamation/new2.html.twig', [
+            'reclamation' => $reclamation,
+            'form' => $form,
+        ]);
+    }
+
+
     #[Route('/{id}', name: 'app_reclamation_show', methods: ['GET'])]
     public function show(Reclamation $reclamation): Response
     {

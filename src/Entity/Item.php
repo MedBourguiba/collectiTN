@@ -255,6 +255,8 @@ class Item
     public function setWinner(?Utilisateur $winner): self
     {
         $this->winner = $winner;
+
+        return $this ;
    
     }
 

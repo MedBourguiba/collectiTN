@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry; 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[Route('/partenaire')]
 class ItemController extends AbstractController
@@ -25,7 +26,7 @@ class ItemController extends AbstractController
             'now' => $now,
         ]);
     }
-
+ 
     #[Route('/show', name: 'list_itemsE', methods: ['GET'])]
     public function showItemE(ItemRepository $ItemRepository): Response
     {
@@ -40,10 +41,11 @@ class ItemController extends AbstractController
 
 
     #[Route('/add', name: 'add_item')]
-    public function addItem(Request $request, ManagerRegistry $doctrine,ItemRepository $ItemRepository): Response
+    public function addItem(Request $request, ManagerRegistry $doctrine,ItemRepository $ItemRepository,UserInterface $user): Response
     {
         $item = new Item();
-        $item->setStatus(0); // Set the default value for status to 0
+        $item->setStatus(0); 
+        $item->setPartner($user);// Set the default value for status to 0
         
         $form = $this->createForm(ItemType::class, $item);
 

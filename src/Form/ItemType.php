@@ -53,7 +53,12 @@ class ItemType extends AbstractType
                 
                 ]
             ])
+    
             ->add('start_time', null, [
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => ['class' => 'form-control mb-3', 'type' => 'date'],
+                'label' => 'Date de Debut*',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'La date de début ne peut pas être vide.',
@@ -73,6 +78,10 @@ class ItemType extends AbstractType
                 ],
             ])
             ->add('end_time', null, [
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => ['class' => 'form-control mb-3', 'type' => 'date'],
+                'label' => 'Date de Fin*',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'La date de fin ne peut pas être vide.',

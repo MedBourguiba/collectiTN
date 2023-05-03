@@ -15,11 +15,11 @@
               <span>{{ items|filter(item => item.status == 0)|length }}</span></a></li>
               <li><a href="{{ path('list_itemsE') }}">Mes Ventes Expirées </i> 
                   <span>{{ items|filter(item => item.status == 1)|length }}</span></a></li>
-              <li><a href="#!"><i class="fa fa-file-archive-o"></i>Ventes Archivées
+              <li><a href="#!"><i ></i>Mes Ventes gagnées
                   <span></span></a></li>
               <li><a href="{{ path('add_item') }}">Ajouter Une Piéce<span></span></a>
               </li>
-              <li><a href="index.html"><i class="fa fa-cog"></i> Logout</a></li>
+              <li><a href="{{path('app_logout')}}"><i class="fa fa-cog"></i> Logout</a></li>
             </ul>
           </div>
        </div>
