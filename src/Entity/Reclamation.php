@@ -3,47 +3,57 @@
 namespace App\Entity;
 
 
-use ApiPlatform\Core\Annotation\ApiResource;
+
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ReclamationRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: ReclamationRepository::class)]
-#[ApiResource]
-class Reclamation
-{
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer")]
-    private ?int $id = null;
+    #[ORM\Entity(repositoryClass: ReclamationRepository::class)]
+   
+    class Reclamation
+    {
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column(type: "integer")]
+        #[Groups(['Reclamations'])]
+     
+        private ?int $id = null;
 
     #[ORM\Column(type: "string", length: 255)]
     #[Assert\NotBlank(message: 'Le sujet de la réclamation ne doit pas être vide')]
+    #[Groups(['Reclamations'])]
     private ?string $sujet = null;
 
     #[ORM\Column(type: "text", length: 65535)]
     #[Assert\NotBlank(message: 'Le message de la réclamation ne doit pas être vide')]
+    #[Groups(['Reclamations'])]
     private ?string $message = null;
 
     #[ORM\Column(type: "datetime", nullable: false)]
+    #[Groups(['Reclamations'])]
     private ?\DateTimeInterface $dateReclamation = null;
     
     #[ORM\ManyToOne(targetEntity: Item::class)]
     #[ORM\JoinColumn(nullable: true)]
+    #[Groups(['Reclamations'])]
     private ?Item $item = null;
 
     #[ORM\ManyToOne(targetEntity: "Utilisateur")]
     #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
+    #[Groups(['Reclamations'])]
     private ?Utilisateur $user = null;
 
     #[ORM\Column(type: "string", length: 255)]
     #[Assert\NotBlank(message: 'Le nom ne doit pas être vide')]
+    #[Groups(['Reclamations'])]
     private ?string $name = null;
 
     #[ORM\Column(type: "string", length: 255)]
     #[Assert\NotBlank(message: 'L\'email ne doit pas être vide')]
     #[Assert\Email(message: 'L\'email "{{ value }}" n\'est pas valide.')]
+    #[Groups(['Reclamations'])]
     private ?string $email = null;
 
     public function __construct()

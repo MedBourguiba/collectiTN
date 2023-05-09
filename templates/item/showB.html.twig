@@ -68,7 +68,7 @@
             <tbody>
                 {% for item in items %}
                   {% if item.status == 1 %} 
-                      {% set img_path = 'uploads/item_images/' ~ item.getimg %}
+                      {% set img_path =  item.getimg %}
                     <tr>
                       <td class="product-thumb">
                              <img src="{{ asset(img_path) }}" alt="image description" width="80px" height="auto" />

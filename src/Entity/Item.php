@@ -13,7 +13,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 #[Vich\Uploadable]
-
 class Item
 {
     #[ORM\Id]
@@ -52,25 +51,26 @@ class Item
     private ?int $status = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['Items'])]
     private ?string $img = null;
 
-    #[Vich\UploadableField(mapping: 'item_image', fileNameProperty: 'img')]
+    #[Vich\UploadableField(mapping: 'item_images', fileNameProperty: 'img')]
     private ?File $imgFile = null;
 
-  
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $Category = null;
 
     #[ORM\OneToMany(mappedBy: 'item', targetEntity: Bids::class)]
     private Collection $bids;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
+     #[Groups(['Items'])]
     private ?Utilisateur $Partner = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist'])]
     private ?Utilisateur $winner = null;
 
    

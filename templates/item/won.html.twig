@@ -1,18 +1,18 @@
 {% extends 'frontClient.html.twig' %}
 {% block body %}
-<section "
+<section >
 <div class="container">
   <div class="row"
    <div class="container">
           <div class="product-grid-list">
                     <div class="row">
                         {% for item in items %}
-                                    {% set img_path = 'uploads/item_images/' ~ item.getimg %}
+                                    {% set img_path = item.getimg %}
                                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                                           <div class="card " style="width: 15rem;" >
                                                  <div class="thumb-content">
                                                     <a href="#">
-                                                           <img class="card-img-top img-fluid" src="{{ asset(img_path) }}" alt="Card image cap">
+                                                           <img class="card-img-top img-fluid" src="img_path" alt="Card image cap">
                                                     </a>
                                                  </div>
                                                <div class="card-body">

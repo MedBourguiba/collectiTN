@@ -33,9 +33,10 @@ security:
         - { path: ^/client/items, roles: ROLE_CLIENT}
         # - { path: ^/profile, roles: ROLE_CLIENT }
         - { path: ^/reclamation/new, roles: [ROLE_CLIENT, ROLE_PARTNER] }
-        - { path: ^/partenaire, roles: ROLE_PARTNER  }
+        # - { path: ^/partenaire, roles: ROLE_PARTNER  }
         - { path: ^/client/won, roles: ROLE_CLIENT  }
         - { path: ^/backoffice, roles: ROLE_ADMIN }
+       
        
 
 

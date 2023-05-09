@@ -4,8 +4,9 @@
 
 {% block body %}
 <div class="container">
-    <h1>Musee</h1>
 
+    <h1>Musee</h1>
+	
     {% for piece in musee.getPiecesMusees %}
 				{% set img_path = 'uploads/pieces_musee_images/' ~ piece.getimg %}
 

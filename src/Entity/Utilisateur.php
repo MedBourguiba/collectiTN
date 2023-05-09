@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
@@ -23,48 +24,57 @@ use Symfony\Component\HttpFoundation\File\File;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[Vich\Uploadable]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
-{
+{  
     #[ORM\Id]
     #[ORM\Column(type: "integer", nullable: false)]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[Groups(['Users'])]
     private int $id;
 
     #[ORM\Column(type: "string", length: 50, nullable: false)]
     #[Assert\NotBlank(message: "Le nom ne doit pas être vide")]
     #[Assert\Length(max: 10, maxMessage: "Le nom ne doit pas dépasser {{ limit }} caractères")]
     #[Assert\Regex(pattern: "/^[^0-9]+$/", message: "Le nom ne doit pas contenir de chiffres")]
+    #[Groups(['Users'])]
     private string $nom;
 
     #[ORM\Column(type: "string", length: 50, nullable: false)]
     #[Assert\NotBlank(message: "Le prenom ne doit pas être vide")]
     #[Assert\Length(max: 10, maxMessage: "Le prenom ne doit pas dépasser {{ limit }} caractères")]
     #[Assert\Regex(pattern: "/^[^0-9]+$/", message: "Le nom ne doit pas contenir de chiffres")]
+    #[Groups(['Users'])]
     private string $prenom;
 
     #[ORM\Column(type: "user_role_enum", nullable: false)]
+    #[Groups(['Users'])]
     private $roles;
 
     #[ORM\Column(type: "integer", nullable: false)]
     #[Assert\NotBlank(message: "Le numéro de telephone ne doit pas être vide")]
     #[Assert\Length(min: 8, max: 8)]
+    #[Groups(['Users'])]
     private int $telephone;
 
     #[ORM\Column(type: "string", length: 50, nullable: false)]
     #[Assert\NotBlank(message: "L'email ne doit pas être vide")]
     #[Assert\Regex(pattern: "/.*@.*$/", message: "L adresse email doit contenir le symbole @")]
+    #[Groups(['Users'])]
     private string $email;
 
     #[ORM\Column(type: "string", length: 255, nullable: false)]
-    
+    #[Groups(['Users'])]
     private string $password;
 
     #[ORM\Column(type: "date", nullable: false)]
+    #[Groups(['Users'])]
     private \DateTime $datenaiss;
 
     #[ORM\Column(type: "boolean")]
+    #[Groups(['Users'])]
     private bool $isVerified = false;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['Users'])]
     private ?string $img = null;
 
     #[Vich\UploadableField(mapping: 'item_image', fileNameProperty: 'img')]

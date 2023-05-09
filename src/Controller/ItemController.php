@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry; 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/partenaire')]
 class ItemController extends AbstractController
@@ -57,7 +58,7 @@ class ItemController extends AbstractController
 
             if ($imageFile) {
                 // Set the image name as the current timestamp and the original file extension
-                $imageName = time() . '.' . $imageFile->getClientOriginalExtension();
+                $imageName ='C:\\wamp64\\www\\images\\Item_images\\'. time() . '.' . $imageFile->getClientOriginalExtension();
 
                 // Move the file to the configured directory using VichUploader
                 $imageFile->move(
@@ -125,7 +126,7 @@ class ItemController extends AbstractController
             $imageFile = $form['img']->getData();
     
             if ($imageFile) {
-                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                $newFilename ='C:\wamp64\www\images\Item_images\ '.uniqid().'.'.$imageFile->guessExtension();
     
                 $imageFile->move(
                     $this->getParameter('item_images_directory'),
